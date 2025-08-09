@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -9,7 +11,8 @@ public class NotificationsManager : MonoBehaviour
     [SerializeField] float _notificationPeriod;
     [SerializeField] float _notificationChance;
     
-    private Notification[] notifications;
+    private NotificationNode[] notifications;
+    NotificationsBST notificationsBST;
 
     private void Awake()
     {
@@ -21,17 +24,21 @@ public class NotificationsManager : MonoBehaviour
 
     private void Start()
     {
-        //string[] rows = Parser(path);
-        //CreateNotifications(rows);
+        string path = "";
+        int levelID = 1;
+
+        string csv = CSVImporter.ImportCSV(path);
+        List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
+        notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, levelID));
 
         StartCoroutine(NotificationPeriod());
     }
 
-    private Notification[] CreateNotifications(string[] rows)
+    private List<NotificationNode> GetNotificationList(int id)
     {
-        //TO DO
-        return null;
+        return notificationsBST.Search(id);
     }
+
 
     private IEnumerator NotificationPeriod()
     {
@@ -53,7 +60,7 @@ public class NotificationsManager : MonoBehaviour
     
     private void NotificationSpawn()
     {
-        Notification notification = GetRandomNotification();
+        NotificationNode notification = GetRandomNotification();
 
         UIManager.Instance.ShowNotificationPopUp(notification.message, notification.speakerName, notification.avatar);
         AudioManager.Instance.PlayNotificationPopUp();
@@ -61,9 +68,9 @@ public class NotificationsManager : MonoBehaviour
         _sanity.ApplySanityEffect(notification.sanityEffect);
     }
 
-    private Notification GetRandomNotification()
+    private NotificationNode GetRandomNotification()
     {
-        Notification notification = notifications[Random.Range(0, notifications.Length - 1)];
+        NotificationNode notification = notifications[Random.Range(0, notifications.Length - 1)];
 
         return notification;
     }

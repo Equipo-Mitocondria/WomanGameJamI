@@ -1,16 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Notification
+public class NotificationNode
 {
+    public int level;
+    public int id;
     public Image avatar;
     public string speakerName;
     public string speakerEmotion;
     public string message;
     public SanityEffect sanityEffect;
 
-    public Notification(string speakerName, string speakerEmotion, string message, SanityEffect sanityEffect)
+    public NotificationNode(int level, int id, string speakerName, string speakerEmotion, string message, SanityEffect sanityEffect)
     {
+        this.level = level;
+        this.id = id;
         this.speakerName = speakerName;
         this.speakerEmotion = speakerEmotion;
         this.message = message;
