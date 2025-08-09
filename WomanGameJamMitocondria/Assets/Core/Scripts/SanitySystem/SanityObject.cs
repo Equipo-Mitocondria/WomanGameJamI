@@ -5,7 +5,7 @@ public class SanityObject : MonoBehaviour, IInteractable
     [SerializeField] private SanityEffect _sanityEffect;
     [SerializeField] private Sanity _sanity;
 
-    public void Interact()
+    public virtual void Interact()
     {
         _sanity.ApplySanityEffect(GetSanityEffect());
     }

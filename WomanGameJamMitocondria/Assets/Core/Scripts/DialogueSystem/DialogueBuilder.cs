@@ -21,8 +21,7 @@ public static class DialogueBuilder
         List<DialogueNode> dialogueNodesList = new List<DialogueNode>();
         foreach (string[] row in parsedCSV)
         {
-            //Change based on content of Notification
-            DialogueNode node = new DialogueNode(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), row[2], row[3].Remove(row[3].Length - 1));
+            DialogueNode node = new DialogueNode(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), row[2]/*.Remove(row[2].Length - 1)*/);
             dialogueNodesList.Add(node);
         }
         return dialogueNodesList;
