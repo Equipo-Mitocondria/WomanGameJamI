@@ -62,7 +62,7 @@ public class NotificationsManager : MonoBehaviour
     {
         NotificationNode notification = GetRandomNotification();
 
-        UIManager.Instance.ShowNotificationPopUp(notification.message, notification.speakerName, notification.avatar);
+        //UIManager.Instance.ShowNotificationPopUp(notification.message, notification.avatar);
         AudioManager.Instance.PlayNotificationPopUp();
 
         _sanity.ApplySanityEffect(notification.sanityEffect);
