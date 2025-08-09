@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,5 +12,10 @@ public class UIManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    public void ShowNotificationPopUp(string message, string speakerName, Image avatar)
+    {
+        //TO DO
     }
 }
