@@ -16,10 +16,7 @@ public class InputManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-    }
 
-    private void Start()
-    {
         _inputActions = new InputActions();
     }
 }

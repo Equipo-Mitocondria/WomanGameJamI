@@ -8,6 +8,8 @@ public class Character : FSMTemplateMachine
 
     [SerializeField] private float _movementForce;
     [SerializeField] private float _maxVelocity;
+    [Space]
+    [SerializeField] private bool _startsWorking;
 
     private Sanity _sanity;
     private Work _work;
@@ -24,22 +26,30 @@ public class Character : FSMTemplateMachine
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
+        _sanity = GetComponent<Sanity>();
+        _work = GetComponent<Work>();
+        _rigidbody = GetComponent<Rigidbody>();
+
+        _interactiveObject = null;
         //Initialize states (this must be done before initializing the FSM)
         workingState = new WorkingState(this);
         exploringState = new ExploringState(this);
 
         // We must call base.Start() to initalize the FSM
         base.Start();
-
-        _sanity = GetComponent<Sanity>();
-        _work = GetComponent<Work>();
-        _rigidbody = GetComponent<Rigidbody>();
-
-        _interactiveObject = null;
     }
 
     protected override void GetInitialState(out FSMTemplateState initialState)
     {
-        initialState = workingState;
+        if(_startsWorking)
+            initialState = workingState;
+        else
+            initialState = exploringState;
     }
+
+    //private void Update()
+    //{
+    //    Debug.Log(_currentState);
+    //    //Debug.Log($"Work: {_work.CurrentWorkAmount}\nSanity: {_sanity.CurrentSanityAmount}");
+    //}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FSMTemplateMachine : MonoBehaviour
 {
-    FSMTemplateState _currentState;
+    protected FSMTemplateState _currentState;
 
     protected virtual void Start()
     {
