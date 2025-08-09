@@ -11,4 +11,9 @@ public class AudioManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+    public void PlayNotificationPopUp()
+    {
+        //TO DO
+    }
 }
