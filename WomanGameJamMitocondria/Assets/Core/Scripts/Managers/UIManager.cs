@@ -16,9 +16,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _dialogueTMPro;
     [SerializeField] private GameObject _leftMessagePrefab, _rightMessagePrefab;
     [SerializeField] private Canvas _hud;
-    [SerializeField] int _maxNumberNotification;
+    [SerializeField] private int _maxNumberNotification;
+    [SerializeField] private float _timeBetweenNotifications;
+    [SerializeField] private float _timeBeforeClearNotifications;
 
     private List<NotificationHUDPanel> _notificationHUDList;
+    private Coroutine _activeNotificationThread;
 
     private void Awake()
     {
@@ -28,26 +31,58 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private IEnumerator ShowNotificationPopUp(string message, string speakerName, Image avatar, bool isLeft = true)
+    public void StartNotificationThread(List<NotificationNode> notificationNodes)
     {
-        if (AreNotificationsFull()){
-            RemoveFirstNotification();
+        if (IsThereAnActiveThread())
+            ClearNotifications();
+
+        _activeNotificationThread = StartCoroutine(ShowNextNotificationInThread(notificationNodes));
+    }
+
+    private IEnumerator ShowNextNotificationInThread(List<NotificationNode> notificationNodes)
+    {
+        if (IsThreadEmpty(notificationNodes))
+        {
+            StartCoroutine(StopNotificationThread());
+
+            if(IsThereAnActiveThread())
+                StopCoroutine(_activeNotificationThread);
         }
+
+        NotificationNode nextNotification = notificationNodes.FirstOrDefault();
+        notificationNodes.Remove(nextNotification);
+
+        AddNotificationToHUD(nextNotification);
+
+        yield return new WaitForSeconds(_timeBetweenNotifications);
+
+        _activeNotificationThread = StartCoroutine(ShowNextNotificationInThread(notificationNodes));
+    }
+
+    private void AddNotificationToHUD(NotificationNode nextNotification)
+    {
+        if (IsHUDNotificationsFull())
+            RemoveFirstNotificationFromHUD();
 
         NotificationHUDPanel notificationHUD;
 
-        if (isLeft)
+        if (nextNotification.speaker == NotificationNode.Speakers.Yuko)
             notificationHUD = Instantiate(_leftMessagePrefab, _hud.gameObject.transform).GetComponent<NotificationHUDPanel>();
         else
             notificationHUD = Instantiate(_rightMessagePrefab, _hud.gameObject.transform).GetComponent<NotificationHUDPanel>();
 
-        notificationHUD.SetNotificationVisuals(avatar, message);
+        notificationHUD.SetNotificationVisuals(nextNotification.avatar, nextNotification.message);
         _notificationHUDList.Add(notificationHUD);
-
-        yield return null;
     }
 
-    private bool AreNotificationsFull()
+    private IEnumerator StopNotificationThread()
+    {
+        yield return new WaitForSeconds(_timeBeforeClearNotifications);
+
+        ClearNotifications();
+    }
+
+    private bool IsHUDNotificationsFull()
     {
         if(_notificationHUDList.Count >= _maxNumberNotification)
             return true;
@@ -55,7 +90,17 @@ public class UIManager : MonoBehaviour
             return false;
     }
 
-    private void RemoveFirstNotification()
+    private bool IsThereAnActiveThread()
+    {
+        return _activeNotificationThread != null;
+    }
+
+    private bool IsThreadEmpty(List<NotificationNode> notificationNodes)
+    {
+        return notificationNodes.Count <= 0;
+    }
+
+    private void RemoveFirstNotificationFromHUD()
     {
         NotificationHUDPanel first = _notificationHUDList.First();
         Destroy(first.gameObject);
@@ -70,6 +115,11 @@ public class UIManager : MonoBehaviour
         }
 
         _notificationHUDList.Clear();
+
+        if(IsThereAnActiveThread())
+            StopCoroutine(_activeNotificationThread);
+
+        _activeNotificationThread = null;
     }
 
     public void ShowDialoguePanel()

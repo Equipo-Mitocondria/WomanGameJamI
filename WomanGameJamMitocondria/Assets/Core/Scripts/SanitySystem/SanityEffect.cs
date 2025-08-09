@@ -8,4 +8,10 @@ public class SanityEffect : ScriptableObject
 
     public SanityChange Effect { get { return _change; } }
     public float Amount {  get { return _amount; } }
+
+    public SanityEffect(SanityChange change, float amount)
+    {
+        _change = change;
+        _amount = amount;
+    }
 }

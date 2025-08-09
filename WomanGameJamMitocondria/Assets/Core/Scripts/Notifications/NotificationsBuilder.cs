@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Playables;
+using static NotificationNode;
 
 public class NotificationsBuilder
 {
@@ -22,7 +23,7 @@ public class NotificationsBuilder
         {
             //Change based on content of NotificationNode
             //NotificationNode node = new NotificationNode(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), row[2], row[3].Remove(row[3].Length - 1));
-            NotificationNode node = new NotificationNode(1, 2, "a", "b", "c", new SanityEffect());
+            NotificationNode node = new NotificationNode(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), row[2], row[3], row[4], row[5], float.Parse(row[6]));
             notificationNodesList.Add(node);
         }
         return notificationNodesList;
