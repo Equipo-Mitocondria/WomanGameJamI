@@ -12,11 +12,10 @@ public class DialogueNode
     public string Character { get { return _character; } }
     public string Text { get { return _text; } }
 
-    public DialogueNode(int level, int id, string character, string text)
+    public DialogueNode(int level, int id, string text)
     {
         _level = level;
         _id = id;
-        _character = character;
         _text = text;
     }
 }

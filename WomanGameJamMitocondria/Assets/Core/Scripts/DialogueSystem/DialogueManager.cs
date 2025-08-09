@@ -7,28 +7,37 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager instance;
+    public static DialogueManager Instance;
     [SerializeField] private int _currentLevel;
+    [SerializeField] private int _timeBetweenDialogues;
     private DialogueBST _dialogueBST;
     private bool _doNextDialogue = false;
     private bool _isInDialogue = false;
-    public bool DoNextDialogue { get { return _doNextDialogue; } set {  _doNextDialogue = value; } }
-    public bool IsInDialogue { get { return _isInDialogue; } }
+    private Coroutine _showDialogueCoroutine;
 
     private void Awake()
     {
-        instance = this;
-        string csv = "";
-        //string csv = CSVImporter.ImportCSV(path);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);        
+    }
+
+    private void Start()
+    {
+        string csv = CSVImporter.ImportCSV(Application.streamingAssetsPath + "/Dialogues.csv");
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
         _dialogueBST = new DialogueBST(DialogueBuilder.BuildDialogueListsList(parsedCSV, _currentLevel));
     }
 
     public void TriggerDialogue(int id)
     {
+        if(_isInDialogue && _showDialogueCoroutine != null)
+            StopCoroutine(_showDialogueCoroutine);
+            
         _isInDialogue = true;
         List<DialogueNode> dialogueNodes = GetDialogueNodeList(id);
-        StartCoroutine(ShowDialogues(dialogueNodes));
+        _showDialogueCoroutine = StartCoroutine(ShowDialogues(dialogueNodes));
     }
 
     private List<DialogueNode> GetDialogueNodeList(int id)
@@ -38,20 +47,17 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator ShowDialogues(List<DialogueNode> dialogueNodes)
     {
-        //UIManager.instance.ShowDialoguePanel();
+        UIManager.Instance.ShowDialoguePanel();
         foreach (DialogueNode node in dialogueNodes)
         {            
             string character = node.Character;
             string text = node.Text;
                 
-            //UIManager.instance.UpdateDialoguePanel(character, text);
+            UIManager.Instance.UpdateDialoguePanel(text);
                 
-            while(!_doNextDialogue)
-                yield return null;
-
-            _doNextDialogue = false;
+            yield return new WaitForSeconds(_timeBetweenDialogues);
         }
-        //UIManager.instance.HideDialoguePanel();
+        UIManager.Instance.HideDialoguePanel();
         _isInDialogue = false;
         //EventHolder.instance.onEndDialogue?.Invoke();
     }
