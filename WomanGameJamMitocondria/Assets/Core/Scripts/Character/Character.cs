@@ -1,0 +1,45 @@
+using UnityEngine;
+
+public class Character : FSMTemplateMachine
+{
+    //States
+    public WorkingState workingState;
+    public ExploringState exploringState;
+
+    [SerializeField] private float _movementForce;
+    [SerializeField] private float _maxVelocity;
+
+    private Sanity _sanity;
+    private Work _work;
+
+    private Rigidbody _rigidbody;
+    private IInteractable _interactiveObject;
+
+    public bool IsWorking { get { return _work.IsWorking; } set { _work.IsWorking = value; } }
+    public Rigidbody Rigidbody { get { return _rigidbody; } }
+    public float MovementForce { get { return _movementForce; } }
+    public float MaxVelocity { get { return _maxVelocity; } }
+    public IInteractable InteractiveObject { get { return _interactiveObject; } set { _interactiveObject = value; } }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    protected override void Start()
+    {
+        //Initialize states (this must be done before initializing the FSM)
+        workingState = new WorkingState(this);
+        exploringState = new ExploringState(this);
+
+        // We must call base.Start() to initalize the FSM
+        base.Start();
+
+        _sanity = GetComponent<Sanity>();
+        _work = GetComponent<Work>();
+        _rigidbody = GetComponent<Rigidbody>();
+
+        _interactiveObject = null;
+    }
+
+    protected override void GetInitialState(out FSMTemplateState initialState)
+    {
+        initialState = workingState;
+    }
+}
