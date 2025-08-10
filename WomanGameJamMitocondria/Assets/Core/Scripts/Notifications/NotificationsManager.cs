@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
@@ -7,11 +8,9 @@ using UnityEngine;
 public class NotificationsManager : MonoBehaviour
 {
     public static NotificationsManager Instance;
-    [SerializeField] Sanity _sanity;
     [SerializeField] float _notificationPeriod;
     [SerializeField] float _notificationChance;
-    
-    private NotificationNode[] notifications;
+
     NotificationsBST notificationsBST;
 
     private void Awake()
@@ -24,7 +23,7 @@ public class NotificationsManager : MonoBehaviour
 
     private void Start()
     {
-        string path = "";
+        string path = Application.streamingAssetsPath + "/Notifications.csv";
         int levelID = 1;
 
         string csv = CSVImporter.ImportCSV(path);
@@ -33,12 +32,6 @@ public class NotificationsManager : MonoBehaviour
 
         StartCoroutine(NotificationPeriod());
     }
-
-    private List<NotificationNode> GetNotificationList(int id)
-    {
-        return notificationsBST.Search(id);
-    }
-
 
     private IEnumerator NotificationPeriod()
     {
@@ -60,18 +53,25 @@ public class NotificationsManager : MonoBehaviour
     
     private void NotificationSpawn()
     {
-        NotificationNode notification = GetRandomNotification();
+        List<NotificationNode> notificationNodes = GetRandomNotificationNodeList();
 
-        UIManager.Instance.ShowNotificationPopUp(notification.message, notification.speakerName, notification.avatar);
+        UIManager.Instance.StartNotificationThread(notificationNodes);
         AudioManager.Instance.PlayNotificationPopUp();
 
-        _sanity.ApplySanityEffect(notification.sanityEffect);
+        NotificationNode first = notificationNodes.FirstOrDefault();
+        Sanity.Instance.ApplySanityEffect(first.sanityEffect);
     }
 
-    private NotificationNode GetRandomNotification()
+    private List<NotificationNode> GetRandomNotificationNodeList()
     {
-        NotificationNode notification = notifications[Random.Range(0, notifications.Length - 1)];
+        int randomId = Random.Range(1, notificationsBST.Count + 1);
+        List<NotificationNode> notificationNodes = new List<NotificationNode>(GetNotificationList(randomId));
 
-        return notification;
+        return notificationNodes;
+    }
+
+    private List<NotificationNode> GetNotificationList(int id)
+    {
+        return notificationsBST.Search(id);
     }
 }

@@ -11,7 +11,6 @@ public class Character : FSMTemplateMachine
     [Space]
     [SerializeField] private bool _startsWorking;
 
-    private Sanity _sanity;
     private Work _work;
 
     private Rigidbody _rigidbody;
@@ -26,7 +25,6 @@ public class Character : FSMTemplateMachine
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
-        _sanity = GetComponent<Sanity>();
         _work = GetComponent<Work>();
         _rigidbody = GetComponent<Rigidbody>();
 

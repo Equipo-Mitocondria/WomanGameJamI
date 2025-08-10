@@ -4,9 +4,12 @@ using UnityEngine;
 public class NotificationsBST : MonoBehaviour
 {
     private NotificationBSTNode _root;
+    private int _count;
+    public int Count { get { return _count; } }
 
     public NotificationsBST(List<NotificationList> notificationListsList)
     {
+        _count = notificationListsList.Count;
         InsertListBalanced(notificationListsList);
     }
 
