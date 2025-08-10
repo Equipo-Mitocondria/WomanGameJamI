@@ -9,6 +9,9 @@ public class WorkingState : FSMTemplateState
 
     public override void Enter() 
     {
+        ((Character)_fsm).Animator.SetTrigger("Work");
+        ((Character)_fsm).MoveToWorkingPosition();
+
         _inputActions = InputManager.Instance.InputActions;
 
         _inputActions.Working.Leave.performed += Leave;
@@ -29,10 +32,13 @@ public class WorkingState : FSMTemplateState
         _inputActions.Working.Leave.performed -= Leave;
 
         _inputActions = null;
+
+        ((Character)_fsm).Animator.SetTrigger("Work");
     }
 
     private void Leave(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         ((Character)_fsm).IsWorking = false;
+        ((Character)_fsm).MoveToPreWorkingPosition();
     }
 }
