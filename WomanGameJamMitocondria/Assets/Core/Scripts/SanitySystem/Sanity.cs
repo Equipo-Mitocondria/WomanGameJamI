@@ -141,4 +141,13 @@ public class Sanity : MonoBehaviour
         yield return new WaitForSeconds(_resetCountdownTime);
         GameManager.Instance.GameOver();
     }
+
+    public void StopDeathCoroutine()
+    {
+        if (_deathCountdownCoroutine != null)
+        {
+            StopCoroutine(_deathCountdownCoroutine);
+            _deathCountdownCoroutine = null;
+        }
+    }
 }

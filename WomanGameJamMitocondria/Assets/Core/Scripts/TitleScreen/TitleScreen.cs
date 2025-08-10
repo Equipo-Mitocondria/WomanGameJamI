@@ -8,6 +8,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Button _volumeButton;
     [SerializeField] private Button _howToPlayButton;
     [SerializeField] private Button _exitButton;
+    [SerializeField] private GameObject _howToPlayBox;
 
     public void PlayStartButton()
     {
