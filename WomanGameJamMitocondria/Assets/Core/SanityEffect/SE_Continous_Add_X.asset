@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SE_Continous_Add_X
   m_EditorClassIdentifier: 
   _change: 0
-  _amount: 0.1
+  _amount: 5

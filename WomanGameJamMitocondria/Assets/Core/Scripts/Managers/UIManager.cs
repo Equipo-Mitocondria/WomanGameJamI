@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _dialoguePanel;
     [SerializeField] private TextMeshProUGUI _dialogueTMPro;
 
+    [Header("Progress")]
+    [SerializeField] private TextMeshProUGUI _sanityTMPro;
+    [SerializeField] private TextMeshProUGUI _workTMPro;
+
     [Header("Notifications")]
     [SerializeField] private GameObject _leftMessagePrefab;
     [SerializeField] private GameObject _rightMessagePrefab;
@@ -142,5 +146,15 @@ public class UIManager : MonoBehaviour
     public void HideDialoguePanel()
     {
         _dialoguePanel.SetActive(false);
+    }
+
+    public void UpdateSanityProgress(string sanityText)
+    {
+        _sanityTMPro.text = "Sanity: " + sanityText;
+    }
+    
+    public void UpdateWorkProgress(string workText)
+    {
+        _workTMPro.text = "Work: " + workText;
     }
 }

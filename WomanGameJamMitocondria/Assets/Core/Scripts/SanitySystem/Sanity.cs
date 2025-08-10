@@ -13,7 +13,10 @@ public class Sanity : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            _sanity = _startingSanity;
+        }
         else
             Destroy(gameObject);
     }
@@ -43,7 +46,10 @@ public class Sanity : MonoBehaviour
 
         if(_sanity < 0)
             _sanity = 0;
-        else if (_sanity >= _maxSanity)
+
+        UIManager.Instance.UpdateSanityProgress(_sanity.ToString("0.00"));
+        
+        if (_sanity >= _maxSanity)
         {
             _sanity = _maxSanity;
             GameManager.Instance.GameOver();
