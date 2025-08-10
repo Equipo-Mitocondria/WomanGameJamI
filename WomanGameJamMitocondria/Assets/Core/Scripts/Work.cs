@@ -24,6 +24,8 @@ public class Work : MonoBehaviour
 
             _currentWork += _workIncreaseSpeed * Time.deltaTime;
 
+            UIManager.Instance.UpdateWorkProgress(_currentWork.ToString("0.00"));
+
             if(_currentWork >= _maxWork)
                 GameManager.Instance.EndTask();
         }

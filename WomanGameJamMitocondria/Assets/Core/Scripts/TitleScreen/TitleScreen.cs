@@ -10,7 +10,7 @@ public class TitleScreen : MonoBehaviour
 
     public void PlayStartButton()
     {
-        SceneManager.Instance.LoadScene(SceneManager.Scenes.Phase1);
+        GameManager.Instance.BeginPlay();
     }
     
     public void PlayVolumeButton()

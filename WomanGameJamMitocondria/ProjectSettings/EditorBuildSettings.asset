@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Core/Scenes/TitleScreen.unity
     guid: c9dfc92ba40afb5448ec955fa81f1565
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Core/Scenes/PlaceholderPhase1.unity
+    guid: e8ad205102bdcbc42b47ec9219bfe864
+  - enabled: 1
+    path: Assets/Core/Scenes/PlaceholderPhase2.unity
+    guid: 1330c82ac39729a41ac1f283e8808691
+  - enabled: 1
+    path: Assets/Core/Scenes/PlaceholderPhase3.unity
+    guid: cfcdf36913d9df047b8ecaf82b5cd7c9
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
