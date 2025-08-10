@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Core/Scenes/TitleScreen.unity
     guid: c9dfc92ba40afb5448ec955fa81f1565
   - enabled: 1
-    path: Assets/Core/Scenes/PlaceholderPhase1.unity
-    guid: e8ad205102bdcbc42b47ec9219bfe864
+    path: Assets/Core/Scenes/WorkingScene.unity
+    guid: 4eb13e623376c0e448c23809a987857a
   - enabled: 1
     path: Assets/Core/Scenes/PlaceholderPhase2.unity
     guid: 1330c82ac39729a41ac1f283e8808691

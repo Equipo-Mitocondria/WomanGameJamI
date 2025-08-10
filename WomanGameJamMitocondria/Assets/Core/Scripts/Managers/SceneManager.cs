@@ -15,8 +15,8 @@ public class SceneManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void LoadScene(Scenes sceneToLoad)
+    public void LoadScene(int sceneToLoad)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene((int)sceneToLoad);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 }
