@@ -41,6 +41,11 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        _dialoguePanel.SetActive(false);
+    }
+
     public void StartNotificationThread(List<NotificationNode> notificationNodes)
     {
         if(IsThereAnActiveThread())
