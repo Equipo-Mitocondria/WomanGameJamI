@@ -64,7 +64,7 @@ public class NotificationsManager : MonoBehaviour
 
     private List<NotificationNode> GetRandomNotificationNodeList()
     {
-        int randomId = Random.Range(1, notificationsBST.Count + 1);
+        int randomId = Random.Range(1, notificationsBST.Count);
         List<NotificationNode> notificationNodes = new List<NotificationNode>(GetNotificationList(randomId));
 
         return notificationNodes;
