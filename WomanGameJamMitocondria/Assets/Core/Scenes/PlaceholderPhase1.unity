@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _notificationPeriod: 10
-  _notificationChance: 0.1
+  _notificationChance: 1
 --- !u!4 &551196376
 Transform:
   m_ObjectHideFlags: 0
@@ -1168,6 +1168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startingSanity: 10
   _maxSanity: 100
+  _deathCountdownTime: 0
 --- !u!1 &1045682783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,7 +2374,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sanityEffect: {fileID: 11400000, guid: fede563d025c73949af37c95d50429a0, type: 2}
   _interactionPrompt: {fileID: 290908656}
-  _dialogueID: 3
+  _isOneUse: 0
+  _dialogueID: 1
 --- !u!1001 &1975101748
 PrefabInstance:
   m_ObjectHideFlags: 0
