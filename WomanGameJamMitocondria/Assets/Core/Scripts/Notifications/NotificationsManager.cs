@@ -55,11 +55,11 @@ public class NotificationsManager : MonoBehaviour
     {
         List<NotificationNode> notificationNodes = GetRandomNotificationNodeList();
 
-        UIManager.Instance.StartNotificationThread(notificationNodes);
-        AudioManager.Instance.PlayNotificationPopUp();
-
         NotificationNode first = notificationNodes.FirstOrDefault();
         Sanity.Instance.ApplySanityEffect(first.sanityEffect);
+
+        UIManager.Instance.StartNotificationThread(notificationNodes);
+        AudioManager.Instance.PlayNotificationPopUp();
     }
 
     private List<NotificationNode> GetRandomNotificationNodeList()
