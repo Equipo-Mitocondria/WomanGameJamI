@@ -82,9 +82,9 @@ public class UIManager : MonoBehaviour
         NotificationHUDPanel notificationHUD;
 
         if (nextNotification.speaker == NotificationNode.Speakers.Yuko)
-            notificationHUD = Instantiate(_leftMessagePrefab, _notificationHud.gameObject.transform).GetComponent<NotificationHUDPanel>();
-        else
             notificationHUD = Instantiate(_rightMessagePrefab, _notificationHud.gameObject.transform).GetComponent<NotificationHUDPanel>();
+        else
+            notificationHUD = Instantiate(_leftMessagePrefab, _notificationHud.gameObject.transform).GetComponent<NotificationHUDPanel>();
 
         notificationHUD.SetNotificationVisuals(nextNotification.avatar, nextNotification.message);
         _notificationHUDList.Add(notificationHUD);
