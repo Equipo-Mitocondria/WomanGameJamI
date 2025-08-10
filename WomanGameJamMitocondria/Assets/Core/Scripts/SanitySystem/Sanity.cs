@@ -72,7 +72,7 @@ public class Sanity : MonoBehaviour
             GameManager.Instance.GameOver();
         }
 
-        UpdateMusic();
+        //UpdateMusic();
     }
 
     private void UpdateMusic()

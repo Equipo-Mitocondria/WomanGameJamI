@@ -33,7 +33,7 @@ public class NotificationsBuilder
     {
         List<NotificationList> notificationListsList = new List<NotificationList>();
 
-        int currentID = 1;
+        int currentID = 0;
         NotificationList currentNotificationList = new NotificationList(currentLevel, currentID);
         notificationListsList.Add(currentNotificationList);
 

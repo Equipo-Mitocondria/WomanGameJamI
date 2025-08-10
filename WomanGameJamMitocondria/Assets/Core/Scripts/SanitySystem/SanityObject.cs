@@ -4,6 +4,9 @@ public class SanityObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private SanityEffect _sanityEffect;
     [SerializeField] private GameObject _interactionPrompt;
+    [SerializeField] private bool _isOneUse;
+
+    private bool _available = true;
 
     private void Start()
     {
@@ -12,7 +15,14 @@ public class SanityObject : MonoBehaviour, IInteractable
 
     public virtual void Interact()
     {
-        Sanity.Instance.ApplySanityEffect(GetSanityEffect());
+        if(_available)
+            Sanity.Instance.ApplySanityEffect(GetSanityEffect());
+
+        if (_isOneUse)
+        {
+            _available = false;
+            _interactionPrompt.SetActive(false);
+        }
     }
 
     private SanityEffect GetSanityEffect()
@@ -21,7 +31,8 @@ public class SanityObject : MonoBehaviour, IInteractable
     }
     public void EnterInteractState()
     {
-        _interactionPrompt.SetActive(true);
+        if(_available)
+            _interactionPrompt.SetActive(true);
     }
 
     public void ExitInteractState()

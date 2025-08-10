@@ -24,11 +24,10 @@ public class NotificationsManager : MonoBehaviour
     private void Start()
     {
         string path = Application.streamingAssetsPath + "/Notifications.csv";
-        int levelID = 1;
 
         string csv = CSVImporter.ImportCSV(path);
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
-        notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, levelID));
+        notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, (int)GameManager.CurrentPhase));
 
         StartCoroutine(NotificationPeriod());
     }
@@ -59,7 +58,7 @@ public class NotificationsManager : MonoBehaviour
         Sanity.Instance.ApplySanityEffect(first.sanityEffect);
 
         UIManager.Instance.StartNotificationThread(notificationNodes);
-        AudioManager.Instance.PlayNotificationPopUp();
+        //AudioManager.Instance.PlayNotificationPopUp();
     }
 
     private List<NotificationNode> GetRandomNotificationNodeList()
