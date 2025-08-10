@@ -84,7 +84,12 @@ public class ExploringState : FSMTemplateState
     private void RotatePlayer(Vector3 forward, Vector3 right, float horizontalInput, float verticalInput)
     {
         if (!(Mathf.Abs(horizontalInput) > Mathf.Epsilon || Mathf.Abs(verticalInput) > Mathf.Epsilon))
+        {
+            ((Character)_fsm).Animator.SetBool("isWalking", false);
             return;
+        }
+
+        ((Character)_fsm).Animator.SetBool("isWalking", true);
 
         // North, South, East & West rotations
         if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput))

@@ -17,10 +17,12 @@ public class Sanity : MonoBehaviour
     private float _deathCountdownToDefinitiveDeath;
 
     private float _sanity;
+    float _sanityPercentage;
     private AudioSource _aS;
     private Coroutine _deathCountdownCoroutine;
 
     public float CurrentSanityAmount { get { return _sanity; } }
+    public float SanityPercentage { get { return _sanityPercentage; } }
 
     private void Awake()
     {
@@ -36,6 +38,14 @@ public class Sanity : MonoBehaviour
     private void Start()
     {
         _deathCountdownCoroutine = null;
+    }
+
+    private void Update()
+    {
+        if (_maxSanity == 0)
+            return;
+
+        _sanityPercentage = _sanity / _maxSanity;
     }
 
     public void ApplySanityEffect(SanityEffect sanityEffect, bool overTime = false)
@@ -77,28 +87,23 @@ public class Sanity : MonoBehaviour
 
     private void UpdateMusic()
     {
-        if (_maxSanity == 0)
-            return;
-
-        float sanityPercentage = _sanity / _maxSanity;
-
-        if(sanityPercentage == 0f)
+        if (_sanityPercentage == 0f)
         {
             AudioManager.Instance.OnMusicLoopPointReached.AddListener(() => AudioManager.Instance.ChangeMusic(MusicPiece.DeathCountdown, _aS));
             StartCoroutine(DeathCountdown());
         }
         else
         {
-            if(_deathCountdownCoroutine != null)
+            if (_deathCountdownCoroutine != null)
                 StopCoroutine(_deathCountdownCoroutine);
 
-            if (sanityPercentage > 0f && sanityPercentage <= 0.33f)
+            if (_sanityPercentage > 0f && _sanityPercentage <= 0.33f)
             {
                 AudioManager.Instance.OnMusicLoopPointReached.AddListener(() => AudioManager.Instance.ChangeMusic(MusicPiece.Insane2, _aS));
             }
-            else if(sanityPercentage > 0.33f && sanityPercentage <= 0.66f)
+            else if (_sanityPercentage > 0.33f && _sanityPercentage <= 0.66f)
                 AudioManager.Instance.OnMusicLoopPointReached.AddListener(() => AudioManager.Instance.ChangeMusic(MusicPiece.Insane1, _aS));
-            else if(sanityPercentage > 0.66f)
+            else if (_sanityPercentage > 0.66f)
                 AudioManager.Instance.OnMusicLoopPointReached.AddListener(() => AudioManager.Instance.ChangeMusic(MusicPiece.Natural, _aS));
         }
     }
