@@ -5,7 +5,7 @@ public class NotificationNode
 {
     public int level;
     public int id;
-    public Image avatar;
+    public Sprite avatar;
     public string speakerName;
     public string speakerEmotion;
     public Speakers speaker;
@@ -22,14 +22,21 @@ public class NotificationNode
         this.speakerEmotion = speakerEmotion;
         this.message = message;
 
-        this.avatar = LoadImage(speakerName, speakerEmotion);
         this.speaker = ParseSpeaker(speakerName);
+        this.avatar = LoadImage();
         this.sanityEffect = ParseSanityChange(sanityChange, sanityAmount);
     }
 
-    private Image LoadImage(string speakerName, string speakerEmotion)
+    private Sprite LoadImage()
     {
-        return Resources.Load<Image>("/Notification Avatars/icon_yuko_avatar_placeholder_01.jpg1");
+        string avatarPath = "Avatars/avatar_";
+        avatarPath += speakerName + "_";
+        avatarPath += speakerEmotion;
+
+        Texture2D texture2D = Resources.Load<Texture2D>(avatarPath);
+        Rect rec = new Rect(0, 0, texture2D.width, texture2D.height);
+
+        return Sprite.Create(texture2D, rec, new Vector2(0, 0), .01f); ;
     }
 
     private Speakers ParseSpeaker(string speakerName)

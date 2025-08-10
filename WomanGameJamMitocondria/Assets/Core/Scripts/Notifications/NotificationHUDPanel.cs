@@ -7,9 +7,9 @@ public class NotificationHUDPanel : MonoBehaviour
     [SerializeField] private Image _avatarHUD;
     [SerializeField] private TMP_Text _messageHUD;
 
-    public void SetNotificationVisuals(Image avatar, string message)
+    public void SetNotificationVisuals(Sprite avatar, string message)
     {
-        _avatarHUD = avatar;
+        _avatarHUD.sprite = avatar;
         _messageHUD.text = message;
     }
 }

@@ -10,7 +10,7 @@ public class NotificationsManager : MonoBehaviour
     public static NotificationsManager Instance;
     [SerializeField] float _notificationPeriod;
     [SerializeField] float _notificationChance;
-    
+
     NotificationsBST notificationsBST;
 
     private void Awake()
@@ -23,7 +23,7 @@ public class NotificationsManager : MonoBehaviour
 
     private void Start()
     {
-        string path = "Assets/Resources/Notifications CSVs/notifications-example.csv";
+        string path = Application.streamingAssetsPath + "/Notifications.csv";
         int levelID = 1;
 
         string csv = CSVImporter.ImportCSV(path);
@@ -64,8 +64,8 @@ public class NotificationsManager : MonoBehaviour
 
     private List<NotificationNode> GetRandomNotificationNodeList()
     {
-        int randomId = Random.Range(0, notificationsBST.Count - 1);
-        List<NotificationNode> notificationNodes = GetNotificationList(randomId);
+        int randomId = Random.Range(1, notificationsBST.Count + 1);
+        List<NotificationNode> notificationNodes = new List<NotificationNode>(GetNotificationList(randomId));
 
         return notificationNodes;
     }
