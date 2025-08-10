@@ -500,6 +500,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialoguePanel: {fileID: 928171018}
   _dialogueTMPro: {fileID: 895071568}
+  _sanityTMPro: {fileID: 0}
+  _workTMPro: {fileID: 0}
   _leftMessagePrefab: {fileID: 2955789119692538616, guid: cf6b12a066864e7428d169dc9694605a, type: 3}
   _rightMessagePrefab: {fileID: 6367752432522887248, guid: 4d9549e52e44bdb4b942a9017175d918, type: 3}
   _notificationHud: {fileID: 1645856912}
@@ -1148,6 +1150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startingSanity: 50
   _maxSanity: 100
+  _deathCountdownTime: 0
 --- !u!1 &1045682783
 GameObject:
   m_ObjectHideFlags: 0
