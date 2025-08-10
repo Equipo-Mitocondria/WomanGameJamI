@@ -89,6 +89,7 @@ public class Sanity : MonoBehaviour
     {
         UIManager.Instance.UpdateSanityProgress(_sanity.ToString("0.00"));
         PostProcessingManager.Instance.SetVignetteIntensity(_sanityPercentage);
+        PostProcessingManager.Instance.SetSaturationIntensity(-_sanityPercentage * 100);
 
         if (_sanityPercentage == 0f)
             return;
