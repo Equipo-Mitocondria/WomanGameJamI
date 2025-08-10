@@ -284,6 +284,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Dying"",
+            ""id"": ""184fc16b-5b67-433c-99e5-0ad961b1778d"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": []
@@ -295,12 +301,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Exploring = asset.FindActionMap("Exploring", throwIfNotFound: true);
         m_Exploring_Interact = m_Exploring.FindAction("Interact", throwIfNotFound: true);
         m_Exploring_Move = m_Exploring.FindAction("Move", throwIfNotFound: true);
+        // Dying
+        m_Dying = asset.FindActionMap("Dying", throwIfNotFound: true);
     }
 
     ~@InputActions()
     {
         UnityEngine.Debug.Assert(!m_Working.enabled, "This will cause a leak and performance issues, InputActions.Working.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Exploring.enabled, "This will cause a leak and performance issues, InputActions.Exploring.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Dying.enabled, "This will cause a leak and performance issues, InputActions.Dying.Disable() has not been called.");
     }
 
     /// <summary>
@@ -575,6 +584,91 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="ExploringActions" /> instance referencing this action map.
     /// </summary>
     public ExploringActions @Exploring => new ExploringActions(this);
+
+    // Dying
+    private readonly InputActionMap m_Dying;
+    private List<IDyingActions> m_DyingActionsCallbackInterfaces = new List<IDyingActions>();
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Dying".
+    /// </summary>
+    public struct DyingActions
+    {
+        private @InputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public DyingActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Dying; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="DyingActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(DyingActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="DyingActions" />
+        public void AddCallbacks(IDyingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DyingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DyingActionsCallbackInterfaces.Add(instance);
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="DyingActions" />
+        private void UnregisterCallbacks(IDyingActions instance)
+        {
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DyingActions.UnregisterCallbacks(IDyingActions)" />.
+        /// </summary>
+        /// <seealso cref="DyingActions.UnregisterCallbacks(IDyingActions)" />
+        public void RemoveCallbacks(IDyingActions instance)
+        {
+            if (m_Wrapper.m_DyingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="DyingActions.AddCallbacks(IDyingActions)" />
+        /// <seealso cref="DyingActions.RemoveCallbacks(IDyingActions)" />
+        /// <seealso cref="DyingActions.UnregisterCallbacks(IDyingActions)" />
+        public void SetCallbacks(IDyingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DyingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DyingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="DyingActions" /> instance referencing this action map.
+    /// </summary>
+    public DyingActions @Dying => new DyingActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Working" which allows adding and removing callbacks.
     /// </summary>
@@ -611,5 +705,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Dying" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="DyingActions.AddCallbacks(IDyingActions)" />
+    /// <seealso cref="DyingActions.RemoveCallbacks(IDyingActions)" />
+    public interface IDyingActions
+    {
     }
 }

@@ -198,6 +198,12 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Dying",
+            "id": "184fc16b-5b67-433c-99e5-0ad961b1778d",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
