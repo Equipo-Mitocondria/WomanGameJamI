@@ -28,7 +28,13 @@ public class ExploringState : FSMTemplateState
 
     public override void UpdateLogic() 
     {
-        if(((Character)_fsm).IsWorking)
+        if (((Character)_fsm).IsDying)
+        {
+            ((Character)_fsm).ChangeState(((Character)_fsm).dyingState);
+            return;
+        }
+
+        if (((Character)_fsm).IsWorking)
             ((Character)_fsm).ChangeState(((Character)_fsm).workingState);
     }
 

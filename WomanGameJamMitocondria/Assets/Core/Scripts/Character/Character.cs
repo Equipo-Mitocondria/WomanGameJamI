@@ -5,6 +5,7 @@ public class Character : FSMTemplateMachine
     //States
     public WorkingState workingState;
     public ExploringState exploringState;
+    public DyingState dyingState;
 
     [Header("References")]
     [SerializeField] private Animator _animator;
@@ -17,12 +18,14 @@ public class Character : FSMTemplateMachine
     [SerializeField] private bool _startsWorking;
 
     private Work _work;
+    private Sanity _sanity;
 
     private Rigidbody _rigidbody;
     private IInteractable _interactiveObject;
     private Vector3 _lastPositionBeforeWork;
 
     public bool IsWorking { get { return _work.IsWorking; } set { _work.IsWorking = value; } }
+    public bool IsDying { get { return _sanity.IsDying; } set { _sanity.IsDying = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
     public Animator Animator { get { return _animator; } }
     public float MovementForce { get { return _movementForce; } }
@@ -33,12 +36,14 @@ public class Character : FSMTemplateMachine
     protected override void Start()
     {
         _work = GetComponent<Work>();
+        _sanity= GetComponent<Sanity>();
         _rigidbody = GetComponent<Rigidbody>();
 
         _interactiveObject = null;
         //Initialize states (this must be done before initializing the FSM)
         workingState = new WorkingState(this);
         exploringState = new ExploringState(this);
+        dyingState = new DyingState(this);
 
         // We must call base.Start() to initalize the FSM
         base.Start();
