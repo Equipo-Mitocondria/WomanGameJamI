@@ -18,13 +18,13 @@ public class Sanity : MonoBehaviour
     private float _deathCountdownToDefinitiveDeath;
 
     private bool _isDying;
-
     public bool IsDying{ get { return _isDying; } set { _isDying = value; } }
 
     private float _sanity;
     float _sanityPercentage;
     private AudioSource _aS;
     private Coroutine _deathCountdownCoroutine;
+    private bool _isDeathCountdown = false;
 
     public float CurrentSanityAmount { get { return _sanity; } }
     public float SanityPercentage { get { return _sanityPercentage; } }
@@ -51,6 +51,8 @@ public class Sanity : MonoBehaviour
             return;
 
         _sanityPercentage = _sanity / _maxSanity;
+
+        UpdateSanity();
     }
 
     public void ApplySanityEffect(SanityEffect sanityEffect, bool overTime = false)
@@ -81,31 +83,29 @@ public class Sanity : MonoBehaviour
         
         if (_sanity >= _maxSanity)
             _sanity = _maxSanity;
-
-        UpdateSanity();
-
-        //UpdateMusic();
     }
 
     private void UpdateSanity()
     {
+        UIManager.Instance.UpdateSanityProgress(_sanity.ToString("0.00"));
+        PostProcessingManager.Instance.SetVignetteIntensity(_sanityPercentage);
+
         if (_sanityPercentage == 0f)
             return;
 
-        UIManager.Instance.UpdateSanityProgress(_sanity.ToString("0.00"));
-        PostProcessingManager.Instance.SetVignetteIntensity(sanityPercentage);
-
         if (_sanityPercentage >= 1f)
         {
-            _deathCountdownCoroutine = StartCoroutine(DeathCountdown());
+            if (!_isDeathCountdown)
+            {
+                _isDeathCountdown = true;
+                _deathCountdownCoroutine = StartCoroutine(DeathCountdown());
+            }
         }
         else
         {
-            if (_deathCountdownCoroutine != null)
-                StopCoroutine(_deathCountdownCoroutine);
-
-            if (_sanityPercentage > 0f && _sanityPercentage <= 0.33f)
+            if (_deathCountdownCoroutine != null )
             {
+                _isDeathCountdown = false;
                 StopCoroutine(_deathCountdownCoroutine);
                 _deathCountdownCoroutine = null;
             }
