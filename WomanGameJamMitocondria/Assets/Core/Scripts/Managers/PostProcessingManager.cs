@@ -21,4 +21,10 @@ public class PostProcessingManager : MonoBehaviour
         _volume.sharedProfile.TryGet(out Vignette vignette);
         vignette.intensity.Override(intensity);
     }
+
+    public void SetSaturationIntensity(float intensity)
+    {
+        _volume.sharedProfile.TryGet(out ColorAdjustments colorAdjustments);
+        colorAdjustments.saturation.Override(intensity);
+    }
 }
