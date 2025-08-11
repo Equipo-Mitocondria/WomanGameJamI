@@ -8,6 +8,7 @@ public class Sanity : MonoBehaviour
     [Header("Sanity Parameters")]
     [SerializeField] private float _startingSanity;
     [SerializeField] private float _maxSanity;
+    [SerializeField] private float _sanityTweeningTime;
     [SerializeField] private float _deathCountdownTime;
     [SerializeField] private float _resetCountdownTime;
 
@@ -63,16 +64,16 @@ public class Sanity : MonoBehaviour
                 if(overTime)
                     _sanity += sanityEffect.Amount * Time.deltaTime;
                 else
-                    _sanity += sanityEffect.Amount;
+                    Tween.Instance.TweenNumber(_sanity, CapSanityValue(_sanity + sanityEffect.Amount), _sanityTweeningTime, value => _sanity = value);
                 break;
             case (SanityChange.Substract):
                 if (overTime)
                     _sanity -= sanityEffect.Amount * Time.deltaTime;
                 else
-                    _sanity -= sanityEffect.Amount;
+                    Tween.Instance.TweenNumber(_sanity, CapSanityValue(_sanity - sanityEffect.Amount), _sanityTweeningTime, value => _sanity = value);
                 break;
             case (SanityChange.Set):
-                _sanity = sanityEffect.Amount;
+                Tween.Instance.TweenNumber(_sanity, CapSanityValue(sanityEffect.Amount), _sanityTweeningTime, value => _sanity = value);
                 break;
             default:
                 throw new System.Exception("Unable to get SanityChange value.");
@@ -83,6 +84,16 @@ public class Sanity : MonoBehaviour
         
         if (_sanity >= _maxSanity)
             _sanity = _maxSanity;
+    }
+
+    private float CapSanityValue(float modifiedSanityValue)
+    {
+        if (modifiedSanityValue < 0)
+            return 0;
+        else if (modifiedSanityValue > _maxSanity)
+            return _maxSanity;
+        else
+            return modifiedSanityValue;
     }
 
     private void UpdateSanity()

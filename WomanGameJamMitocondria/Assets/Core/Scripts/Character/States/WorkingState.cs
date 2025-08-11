@@ -11,6 +11,7 @@ public class WorkingState : FSMTemplateState
     {
         ((Character)_fsm).Animator.SetTrigger("Work");
         ((Character)_fsm).MoveToWorkingPosition();
+        CameraManager.Instance.ChangeCamera(Cameras.Desk); 
 
         _inputActions = InputManager.Instance.InputActions;
 
@@ -40,6 +41,7 @@ public class WorkingState : FSMTemplateState
         _inputActions = null;
 
         ((Character)_fsm).Animator.SetTrigger("Work");
+        CameraManager.Instance.ChangeCamera(Cameras.Bedroom);
     }
 
     private void Leave(UnityEngine.InputSystem.InputAction.CallbackContext context)
