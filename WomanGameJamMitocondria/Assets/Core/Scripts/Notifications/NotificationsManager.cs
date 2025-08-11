@@ -13,6 +13,8 @@ public class NotificationsManager : MonoBehaviour
 
     NotificationsBST notificationsBST;
 
+    private Coroutine _notificationCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -29,17 +31,21 @@ public class NotificationsManager : MonoBehaviour
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
         notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, GameManager.Instance.CurrentPhase));
 
-        StartCoroutine(NotificationPeriod());
+        if(GameManager.Instance.CurrentPhase != 3)
+            NotificationSpawnWithID(0);
+
+        _notificationCoroutine = StartCoroutine(NotificationPeriod());
     }
+
 
     private IEnumerator NotificationPeriod()
     {
+        yield return new WaitForSeconds(_notificationPeriod);
+
         if (WillNotificationSpawn())
             NotificationSpawn();
 
-        yield return new WaitForSeconds(_notificationPeriod);
-
-        StartCoroutine(NotificationPeriod());
+        _notificationCoroutine = StartCoroutine(NotificationPeriod());
     }
 
     private bool WillNotificationSpawn()
@@ -48,6 +54,17 @@ public class NotificationsManager : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    public void NotificationSpawnWithID(int nodeId)
+    {
+        List<NotificationNode> notificationNodes = GetNotificationList(nodeId);
+
+        NotificationNode first = notificationNodes.FirstOrDefault();
+        Sanity.Instance.ApplySanityEffect(first.sanityEffect);
+
+        UIManager.Instance.StartNotificationThread(notificationNodes);
+        //AudioManager.Instance.PlayNotificationPopUp();
     }
     
     private void NotificationSpawn()
@@ -59,6 +76,16 @@ public class NotificationsManager : MonoBehaviour
 
         UIManager.Instance.StartNotificationThread(notificationNodes);
         //AudioManager.Instance.PlayNotificationPopUp();
+    }
+
+    public void StopNotificationCoroutines()
+    {
+        if (_notificationCoroutine != null)
+        {
+            StopCoroutine(_notificationCoroutine);
+            _notificationCoroutine = null;
+        }
+
     }
 
     private List<NotificationNode> GetRandomNotificationNodeList()
