@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1626a1eb23e3c6b41b8fe162bf5286f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeWaitForEndPlay: 0
 --- !u!4 &266722455
 Transform:
   m_ObjectHideFlags: 0
@@ -1678,6 +1679,7 @@ MonoBehaviour:
   _volumeButton: {fileID: 1393865571}
   _howToPlayButton: {fileID: 385586991}
   _exitButton: {fileID: 327678724}
+  _howToPlayBox: {fileID: 0}
 --- !u!114 &1572247665
 MonoBehaviour:
   m_ObjectHideFlags: 0

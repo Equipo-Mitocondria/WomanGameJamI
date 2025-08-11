@@ -1,12 +1,16 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
+    [SerializeField] private float _timeWaitForEndPlay;
 
-    private float _time;
     private SceneManager.Scenes _currentPhase;
+    private float _time;
+    private bool _hasWin = false;
 
     public float Time {  get { return _time; } }
     public int CurrentPhase { get { return ConvertSceneManagerSceneToUnityBuildIndex(_currentPhase); } set { _currentPhase = ConvertUnitySceneToSceneManagerScene(value); } }
@@ -37,7 +41,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.Instance.LoadScene(CurrentPhase);
                 break;
             case SceneManager.Scenes.Phase3:
-                EndPlay();
+                Win();
                 break;
         }
     }
@@ -47,15 +51,47 @@ public class GameManager : MonoBehaviour
         CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase1);
         SceneManager.Instance.LoadScene(CurrentPhase);
     }
+
     public void EndPlay()
     {
         CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.TitleScreen);
         SceneManager.Instance.LoadScene(CurrentPhase);
     }
 
+    public void Win()
+    {
+        if (!_hasWin)
+        {
+            _hasWin = true;
+
+            NotificationsManager.Instance.NotificationSpawnWithID(0);
+            NotificationsManager.Instance.StopNotificationCoroutines();
+
+            Sanity.Instance.StopDeathCoroutine();
+
+            StartCoroutine(WaitForEndPlay());
+        }
+    }
+
+    private IEnumerator WaitForEndPlay()
+    {
+        yield return new WaitForSeconds(_timeWaitForEndPlay);
+
+        CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Credits);
+        SceneManager.Instance.LoadScene(4);
+    }
+
     public void GameOver()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().Die();
         EndPlay();
+    }
+
+    public IEnumerator FinishCredits()
+    {
+        yield return new WaitForSeconds(14f);
+
+        SceneManager.Instance.LoadScene(0);
     }
 
     private SceneManager.Scenes ConvertUnitySceneToSceneManagerScene(int value)
@@ -70,6 +106,8 @@ public class GameManager : MonoBehaviour
                 return SceneManager.Scenes.Phase2;
             case (3):
                 return SceneManager.Scenes.Phase3;
+            case (4):
+                return SceneManager.Scenes.Credits;
             default:
                 throw new Exception($"Unable to load scene with build index {value}.");
         }
@@ -87,6 +125,8 @@ public class GameManager : MonoBehaviour
                 return 2;
             case SceneManager.Scenes.Phase3:
                 return 3;
+            case SceneManager.Scenes.Credits:
+                return 4;
             default:
                 throw new Exception($"Unable to find build index for scene {value}.");
         }
