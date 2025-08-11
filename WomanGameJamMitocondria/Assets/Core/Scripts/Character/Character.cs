@@ -23,6 +23,7 @@ public class Character : FSMTemplateMachine
     private Rigidbody _rigidbody;
     private IInteractable _interactiveObject;
     private Vector3 _lastPositionBeforeWork;
+    private Quaternion _lastRotationBeforeWork;
 
     public bool IsWorking { get { return _work.IsWorking; } set { _work.IsWorking = value; } }
     public bool IsDying { get { return _sanity.IsDying; } set { _sanity.IsDying = value; } }
@@ -60,12 +61,15 @@ public class Character : FSMTemplateMachine
     public void MoveToWorkingPosition()
     {
         _lastPositionBeforeWork = transform.position;
+        _lastRotationBeforeWork = transform.rotation;
         transform.position = _workingPosition;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     public void MoveToPreWorkingPosition()
     {
         transform.position = _lastPositionBeforeWork;
+        transform.rotation = _lastRotationBeforeWork;
     }
 
     public void Die()
