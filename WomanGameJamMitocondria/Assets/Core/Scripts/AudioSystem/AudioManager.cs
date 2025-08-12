@@ -12,8 +12,9 @@ public class AudioManager : MonoBehaviour
 
     //References
     [SerializeField] private AudioDatabase _db;
+    [SerializeField] private GameObject _audioListenerGO;
 
-    public UnityEvent OnMusicLoopPointReached = new UnityEvent();
+    [NonSerialized] public UnityEvent OnMusicLoopPointReached = new UnityEvent();
 
     //Private Variables
     private List<AudioSource> _aSList = new List<AudioSource>();
@@ -26,11 +27,116 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    #region Play Methods
-    public AudioSource PlayEffectSound(GameObject gameObject)
+    #region Play
+    public AudioSource PlaySoundEffect(SoundEffect soundEffect, GameObject gameObject = null)
     {
-        _db.effectCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.effectVolume);
-        return CreateAudioSource(gameObject, _db.effectAC, _db.effectCurrentVolume, _db.effectPitchSwift, _db.effectMinDistance, _db.effectMaxDistance);
+        if (gameObject == null)
+            gameObject = _audioListenerGO;
+
+        switch (soundEffect)
+        {
+            case SoundEffect.Cat:
+                return PlayCatSound(gameObject);
+            case SoundEffect.Plushie:
+                return PlayPlushieSound(gameObject);
+            case SoundEffect.Work:
+                return PlayWorkSound(gameObject);
+            case SoundEffect.Cup:
+                return PlayCupSound(gameObject);
+            case SoundEffect.PhoneBuzz:
+                return PlayPhoneBuzzSound(gameObject);
+            case SoundEffect.Notification:
+                return PlayNotificationSound(gameObject);
+            case SoundEffect.WaterBottle:
+                return PlayWaterBottleSound(gameObject);
+            case SoundEffect.WaterStream:
+                return PlayWaterStreamSound(gameObject);
+            case SoundEffect.Tap:
+                return PlayTapSound(gameObject);
+            case SoundEffect.Plant:
+                return PlayPlantSound(gameObject);
+            case SoundEffect.Fridge:
+                return PlayFridgeSound(gameObject);
+            case SoundEffect.Glitch:
+                return PlayGlitchSound(gameObject);
+            default:
+                throw new Exception($"Unable to find {soundEffect.ToString()} audio.");
+        }
+    }
+
+
+
+    #region Individual Play Methods
+    private AudioSource PlayCatSound(GameObject gameObject)
+    {
+        _db.catCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.catVolume);
+        return CreateAudioSource(gameObject, _db.catAC, _db.catCurrentVolume, _db.catPitchSwift, _db.catMinDistance, _db.catMaxDistance);
+    }
+
+    private AudioSource PlayPlushieSound(GameObject gameObject)
+    {
+        _db.plushieCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.plushieVolume);
+        return CreateAudioSource(gameObject, _db.plushieAC, _db.plushieCurrentVolume, _db.plushiePitchSwift, _db.plushieMinDistance, _db.plushieMaxDistance);
+    }
+
+    private AudioSource PlayWorkSound(GameObject gameObject)
+    {
+        _db.workCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.workVolume);
+        return CreateAudioSource(gameObject, _db.workAC, _db.workCurrentVolume, _db.workPitchSwift, _db.workMinDistance, _db.workMaxDistance, true);
+    }
+
+    private AudioSource PlayCupSound(GameObject gameObject)
+    {
+        _db.cupCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.cupVolume);
+        return CreateAudioSource(gameObject, _db.cupAC, _db.cupCurrentVolume, _db.cupPitchSwift, _db.cupMinDistance, _db.cupMaxDistance);
+    }
+
+    private AudioSource PlayPhoneBuzzSound(GameObject gameObject)
+    {
+        _db.phoneBuzzCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.phoneBuzzVolume);
+        return CreateAudioSource(gameObject, _db.phoneBuzzAC, _db.phoneBuzzCurrentVolume, _db.phoneBuzzPitchSwift, _db.phoneBuzzMinDistance, _db.phoneBuzzMaxDistance);
+    }
+
+    private AudioSource PlayNotificationSound(GameObject gameObject)
+    {
+        _db.notificationCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.notificationVolume);
+        return CreateAudioSource(gameObject, _db.notificationAC, _db.notificationCurrentVolume, _db.notificationPitchSwift, _db.notificationMinDistance, _db.notificationMaxDistance);
+    }
+
+    private AudioSource PlayWaterBottleSound(GameObject gameObject)
+    {
+        _db.waterBottleCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.waterBottleVolume);
+        return CreateAudioSource(gameObject, _db.waterBottleAC, _db.waterBottleCurrentVolume, _db.waterBottlePitchSwift, _db.waterBottleMinDistance, _db.waterBottleMaxDistance);
+    }
+
+    private AudioSource PlayWaterStreamSound(GameObject gameObject)
+    {
+        _db.waterStreamCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.waterStreamVolume);
+        return CreateAudioSource(gameObject, _db.waterStreamAC, _db.waterStreamCurrentVolume, _db.waterStreamPitchSwift, _db.waterStreamMinDistance, _db.waterStreamMaxDistance);
+    }
+
+    private AudioSource PlayTapSound(GameObject gameObject)
+    {
+        _db.tapCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.tapVolume);
+        return CreateAudioSource(gameObject, _db.tapAC, _db.tapCurrentVolume, _db.tapPitchSwift, _db.tapMinDistance, _db.tapMaxDistance);
+    }
+
+    private AudioSource PlayPlantSound(GameObject gameObject)
+    {
+        _db.plantCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.plantVolume);
+        return CreateAudioSource(gameObject, _db.plantAC, _db.plantCurrentVolume, _db.plantPitchSwift, _db.plantMinDistance, _db.plantMaxDistance);
+    }
+
+    private AudioSource PlayFridgeSound(GameObject gameObject)
+    {
+        _db.fridgeCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.fridgeVolume);
+        return CreateAudioSource(gameObject, _db.fridgeAC, _db.fridgeCurrentVolume, _db.fridgePitchSwift, _db.fridgeMinDistance, _db.fridgeMaxDistance);
+    }
+
+    private AudioSource PlayGlitchSound(GameObject gameObject)
+    {
+        _db.glitchCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.glitchVolume);
+        return CreateAudioSource(gameObject, _db.glitchAC, _db.glitchCurrentVolume, _db.glitchPitchSwift, _db.glitchMinDistance, _db.glitchMaxDistance);
     }
 
     public AudioSource PlayNotificationPopUp()
@@ -38,6 +144,8 @@ public class AudioManager : MonoBehaviour
         //TO DO
         return new AudioSource();
     }
+    #endregion
+    
     #endregion
 
     #region Music

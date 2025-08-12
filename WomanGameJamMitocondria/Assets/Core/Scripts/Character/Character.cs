@@ -9,6 +9,7 @@ public class Character : FSMTemplateMachine
 
     [Header("References")]
     [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject _computerGO;
 
     [Header("Parameters")]
     [SerializeField] private float _movementForce;
@@ -27,6 +28,8 @@ public class Character : FSMTemplateMachine
 
     public bool IsWorking { get { return _work.IsWorking; } set { _work.IsWorking = value; } }
     public bool IsDying { get { return _sanity.IsDying; } set { _sanity.IsDying = value; } }
+
+    public GameObject ComputerGO {  get { return _computerGO; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
     public Animator Animator { get { return _animator; } }
     public float MovementForce { get { return _movementForce; } }

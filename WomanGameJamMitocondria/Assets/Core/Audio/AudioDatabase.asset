@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d562e75120792324e8e2b651795fbe46, type: 3}
+  m_Name: AudioDatabase
+  m_EditorClassIdentifier: 
+  catAC: {fileID: 8300000, guid: bdbcbcc2635ac3145809ba284c94914c, type: 3}
+  catVolume: 1
+  catMinDistance: 1
+  catMaxDistance: 3
+  catPitchSwift: 0
+  plushieAC: {fileID: 8300000, guid: dd80e8708d2b21543b938d6ed3afe40a, type: 3}
+  plushieVolume: 1
+  plushieMinDistance: 1
+  plushieMaxDistance: 3
+  plushiePitchSwift: 0
+  workAC: {fileID: 8300000, guid: 1b5474616908f55439f9f96966065ca5, type: 3}
+  workVolume: 0.05
+  workMinDistance: 1
+  workMaxDistance: 3
+  workPitchSwift: 0
+  cupAC: {fileID: 8300000, guid: d7772169e48c99c499fc37a4435199ab, type: 3}
+  cupVolume: 1
+  cupMinDistance: 1
+  cupMaxDistance: 3
+  cupPitchSwift: 0
+  phoneBuzzAC: {fileID: 0}
+  phoneBuzzVolume: 0
+  phoneBuzzMinDistance: 0
+  phoneBuzzMaxDistance: 0
+  phoneBuzzPitchSwift: 0
+  notificationAC: {fileID: 8300000, guid: 53f66438b6e71444facb63ee4be2e46c, type: 3}
+  notificationVolume: 0.2
+  notificationMinDistance: 1
+  notificationMaxDistance: 1
+  notificationPitchSwift: 0
+  waterBottleAC: {fileID: 0}
+  waterBottleVolume: 0
+  waterBottleMinDistance: 0
+  waterBottleMaxDistance: 0
+  waterBottlePitchSwift: 0
+  waterStreamAC: {fileID: 0}
+  waterStreamVolume: 0
+  waterStreamMinDistance: 0
+  waterStreamMaxDistance: 0
+  waterStreamPitchSwift: 0
+  tapAC: {fileID: 0}
+  tapVolume: 0
+  tapMinDistance: 0
+  tapMaxDistance: 0
+  tapPitchSwift: 0
+  plantAC: {fileID: 0}
+  plantVolume: 0
+  plantMinDistance: 0
+  plantMaxDistance: 0
+  plantPitchSwift: 0
+  fridgeAC: {fileID: 0}
+  fridgeVolume: 0
+  fridgeMinDistance: 0
+  fridgeMaxDistance: 0
+  fridgePitchSwift: 0
+  glitchAC: {fileID: 0}
+  glitchVolume: 0
+  glitchMinDistance: 0
+  glitchMaxDistance: 0
+  glitchPitchSwift: 0
+  naturalMusicAC: {fileID: 0}
+  insane1MusicAC: {fileID: 0}
+  insane2MusicAC: {fileID: 0}
+  deathCountdownMusicAC: {fileID: 0}
+  definitiveDeathMusicAC: {fileID: 0}
+  musicVolume: 0
+  musicMinDistance: 0
+  musicMaxDistance: 0

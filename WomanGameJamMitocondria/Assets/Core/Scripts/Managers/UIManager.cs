@@ -63,6 +63,7 @@ public class UIManager : MonoBehaviour
             notificationNodes.Remove(nextNotification);
 
             AddNotificationToHUD(nextNotification);
+            AudioManager.Instance.PlaySoundEffect(SoundEffect.Notification);
 
             yield return new WaitForSeconds(_timeBetweenNotifications);
 
