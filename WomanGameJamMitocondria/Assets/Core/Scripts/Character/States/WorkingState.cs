@@ -5,13 +5,17 @@ public class WorkingState : FSMTemplateState
 {
     private InputActions _inputActions;
 
+    private AudioSource _aS;
+
     public WorkingState(FSMTemplateMachine fsm) : base(fsm) { }
 
     public override void Enter() 
     {
         ((Character)_fsm).Animator.SetTrigger("Work");
         ((Character)_fsm).MoveToWorkingPosition();
-        CameraManager.Instance.ChangeCamera(Cameras.Desk); 
+        CameraManager.Instance.ChangeCamera(Cameras.Desk);
+
+        _aS = AudioManager.Instance.PlaySoundEffect(SoundEffect.Work, ((Character)_fsm).ComputerGO);
 
         _inputActions = InputManager.Instance.InputActions;
 
@@ -42,6 +46,12 @@ public class WorkingState : FSMTemplateState
 
         ((Character)_fsm).Animator.SetTrigger("Work");
         CameraManager.Instance.ChangeCamera(Cameras.Bedroom);
+
+        if (_aS != null)
+        {
+            AudioManager.Instance.StopAudioSource(_aS);
+            _aS = null;
+        }
     }
 
     private void Leave(UnityEngine.InputSystem.InputAction.CallbackContext context)

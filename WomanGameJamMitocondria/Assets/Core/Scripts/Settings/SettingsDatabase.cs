@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Settings/SettingsDatabase")]
+[CreateAssetMenu(menuName = "Databases/SettingsDatabase")]
 public class SettingsDatabase : ScriptableObject
 {
     [SerializeField] private bool _areSoundsEnabled = true;
