@@ -98,9 +98,7 @@ public class Sanity : MonoBehaviour
 
     private void UpdateSanity()
     {
-        UIManager.Instance.UpdateSanityProgress(_sanity.ToString("0.00"));
-        PostProcessingManager.Instance.SetVignetteIntensity(_sanityPercentage);
-        PostProcessingManager.Instance.SetSaturationIntensity(-_sanityPercentage * 100);
+        PostProcessingManager.Instance.SetPostProductionIntensity(_sanityPercentage);
 
         if (_sanityPercentage == 0f)
             return;
@@ -143,6 +141,7 @@ public class Sanity : MonoBehaviour
         yield return new WaitForSeconds(_deathCountdownTime);
 
         _isDying = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().Die();
         //AudioManager.Instance.OnMusicLoopPointReached.AddListener(() => AudioManager.Instance.ChangeMusic(MusicPiece.DefinitiveDeath, _aS));
         StartCoroutine(ResetCountdown());
     }
