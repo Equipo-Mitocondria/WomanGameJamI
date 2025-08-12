@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     {
         string csv = CSVImporter.ImportCSV(Application.streamingAssetsPath + "/Dialogues.csv");
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
-        _dialogueBST = new DialogueBST(DialogueBuilder.BuildDialogueListsList(parsedCSV, _currentLevel));
+        _dialogueBST = new DialogueBST(DialogueBuilder.BuildDialogueListsList(parsedCSV, GameManager.Instance.CurrentPhase));
     }
 
     public void TriggerDialogue(int id)

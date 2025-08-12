@@ -19,8 +19,8 @@
 2;4;client;neutral;Did you draw it with the mouse?;add;20
 3;0;client;neutral;Heeeeey.... Great job! I never doubted you :);add;0
 3;1;client;neutral;Your art is not worth it;add;30
-3;2;yuko;corrupt;You made a mistake by becoming independent so soon...;add;30
-3;3;client;neutral;Your parents must be ashamed of you...;add;30
+3;2;yuko;corrupt;You made a mistake by becoming independent so soon...;add;20
+3;3;client;neutral;Your parents must be ashamed of you...;add;20
 3;4;yuko;corrupt;You will never achieve anything in life;add;30
-3;5;client;neutral;You've wasted your life on this...;add;30
+3;5;client;neutral;You've wasted your life on this...;add;20
 3;6;yuko;corrupt;You.Are.Nothing...;add;30
