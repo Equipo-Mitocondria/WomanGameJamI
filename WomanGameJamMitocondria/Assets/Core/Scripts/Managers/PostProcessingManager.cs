@@ -8,6 +8,22 @@ public class PostProcessingManager : MonoBehaviour
 
     [SerializeField] private Volume _volume;
 
+    [Header("Vignette")]
+    [SerializeField] private float _minVignette;
+    [SerializeField] private float _maxVignette;
+
+    [Header("Color Adjustment")]
+    [SerializeField] private float _minColorAdjustment;
+    [SerializeField] private float _maxColorAdjustment;
+
+    [Header("Chromatic Aberration")]
+    [SerializeField] private float _minChromaticAberration;
+    [SerializeField] private float _maxChromaticAberration;
+
+    [Header("Lens Distortion")]
+    [SerializeField] private float _minLensDistortion;
+    [SerializeField] private float _maxLensDistortion;
+
     private void Awake()
     {
         if (Instance == null)
@@ -16,15 +32,48 @@ public class PostProcessingManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SetVignetteIntensity(float intensity)
+    public void SetPostProductionIntensity(float intensity)
     {
-        _volume.sharedProfile.TryGet(out Vignette vignette);
-        vignette.intensity.Override(intensity);
+        SetVignetteIntensity(intensity);
+        SetColorAdjustmentSaturation(intensity * 100);
+        SetChromaticAberrationIntensity(intensity);
+        SetLensDistortionIntensity(intensity);
     }
 
-    public void SetSaturationIntensity(float intensity)
+    private void SetVignetteIntensity(float intensity)
     {
-        _volume.sharedProfile.TryGet(out ColorAdjustments colorAdjustments);
-        colorAdjustments.saturation.Override(intensity);
+        float intensityScaling = _maxVignette - _minVignette;
+        float intensityScaled = intensity * intensityScaling + _minVignette;
+
+        _volume.sharedProfile.TryGet(out Vignette vignette);
+        vignette.intensity.Override(intensityScaled);
     }
+
+    private void SetColorAdjustmentSaturation(float intensity)
+    {
+        float intensityScaling = _maxColorAdjustment - _minColorAdjustment;
+        float intensityScaled = intensity * intensityScaling + _minColorAdjustment;
+
+        _volume.sharedProfile.TryGet(out ColorAdjustments colorAdjustments);
+        colorAdjustments.saturation.Override(intensityScaled);
+    }
+
+    private void SetChromaticAberrationIntensity(float intensity)
+    {
+        float intensityScaling = _maxChromaticAberration - _minChromaticAberration;
+        float intensityScaled = intensity * intensityScaling + _minChromaticAberration;
+
+        _volume.sharedProfile.TryGet(out ChromaticAberration chromaticAberration);
+        chromaticAberration.intensity.Override(intensityScaled);
+    }
+
+    private void SetLensDistortionIntensity(float intensity)
+    {
+        float intensityScaling = _maxLensDistortion - _minLensDistortion;
+        float intensityScaled = intensity * intensityScaling + _minLensDistortion;
+
+        _volume.sharedProfile.TryGet(out LensDistortion lensDistortion);
+        lensDistortion.intensity.Override(intensityScaled);
+    }
+
 }

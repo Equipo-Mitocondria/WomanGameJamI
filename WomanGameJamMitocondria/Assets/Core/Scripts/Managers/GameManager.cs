@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().Die();
         EndPlay();
     }
 

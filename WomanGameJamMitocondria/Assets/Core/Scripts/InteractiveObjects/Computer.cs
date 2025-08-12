@@ -3,11 +3,11 @@ using UnityEngine;
 public class Computer : MonoBehaviour, IInteractable
 {
     [SerializeField] private Work _work;
-    [SerializeField] private GameObject _progressPrompt;
+    [SerializeField] private GameObject _interactionPrompt;
 
     private void Start()
     {
-        _progressPrompt.SetActive(false);
+        _interactionPrompt.SetActive(false);
     }
 
     public void Interact()
@@ -18,12 +18,12 @@ public class Computer : MonoBehaviour, IInteractable
     }
     public void EnterInteractState()
     {
-        _progressPrompt.SetActive(true);
+        _interactionPrompt.SetActive(true);
     }
 
     public void ExitInteractState()
     {
-        _progressPrompt.SetActive(false);
+        _interactionPrompt.SetActive(false);
     }
 
 }
