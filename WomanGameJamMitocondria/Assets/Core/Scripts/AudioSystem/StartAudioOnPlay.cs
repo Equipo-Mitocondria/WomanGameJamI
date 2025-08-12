@@ -9,13 +9,6 @@ public class StartAudioOnPlay : MonoBehaviour
 
     void Start()
     {
-        switch (_soundEffect) 
-        {
-            case (SoundEffect.None):
-                _aS = AudioManager.Instance.PlaySoundEffect(_soundEffect, gameObject);
-                break;
-            default:
-                throw new System.Exception($"Sound effect in {gameObject.name} not set.");
-        }      
+        _aS = AudioManager.Instance.PlaySoundEffect(_soundEffect, gameObject);     
     }
 }
