@@ -15,7 +15,7 @@ MonoBehaviour:
   catAC: {fileID: 8300000, guid: bdbcbcc2635ac3145809ba284c94914c, type: 3}
   catVolume: 1
   catMinDistance: 1
-  catMaxDistance: 3
+  catMaxDistance: 50
   catPitchSwift: 0
   plushieAC: {fileID: 8300000, guid: dd80e8708d2b21543b938d6ed3afe40a, type: 3}
   plushieVolume: 1
@@ -32,46 +32,46 @@ MonoBehaviour:
   cupMinDistance: 1
   cupMaxDistance: 3
   cupPitchSwift: 0
-  phoneBuzzAC: {fileID: 0}
-  phoneBuzzVolume: 0
-  phoneBuzzMinDistance: 0
-  phoneBuzzMaxDistance: 0
+  phoneBuzzAC: {fileID: 8300000, guid: bced4da36cfa9d1478abe582c37e6f67, type: 3}
+  phoneBuzzVolume: 1
+  phoneBuzzMinDistance: 1
+  phoneBuzzMaxDistance: 3
   phoneBuzzPitchSwift: 0
   notificationAC: {fileID: 8300000, guid: 53f66438b6e71444facb63ee4be2e46c, type: 3}
   notificationVolume: 0.2
   notificationMinDistance: 1
   notificationMaxDistance: 1
   notificationPitchSwift: 0
-  waterBottleAC: {fileID: 0}
-  waterBottleVolume: 0
-  waterBottleMinDistance: 0
-  waterBottleMaxDistance: 0
+  waterBottleAC: {fileID: 8300000, guid: a37665d76594d4a439cf692515a428d8, type: 3}
+  waterBottleVolume: 1
+  waterBottleMinDistance: 1
+  waterBottleMaxDistance: 3
   waterBottlePitchSwift: 0
-  waterStreamAC: {fileID: 0}
-  waterStreamVolume: 0
-  waterStreamMinDistance: 0
-  waterStreamMaxDistance: 0
+  waterStreamAC: {fileID: 8300000, guid: 2d142da2e3fa79e4c9da8c8be471bfb9, type: 3}
+  waterStreamVolume: 1
+  waterStreamMinDistance: 1
+  waterStreamMaxDistance: 3
   waterStreamPitchSwift: 0
-  tapAC: {fileID: 0}
-  tapVolume: 0
-  tapMinDistance: 0
-  tapMaxDistance: 0
+  tapAC: {fileID: 8300000, guid: 37529e0192502a54ebd300fa09159727, type: 3}
+  tapVolume: 1
+  tapMinDistance: 1
+  tapMaxDistance: 3
   tapPitchSwift: 0
-  plantAC: {fileID: 0}
-  plantVolume: 0
-  plantMinDistance: 0
-  plantMaxDistance: 0
-  plantPitchSwift: 0
-  fridgeAC: {fileID: 0}
-  fridgeVolume: 0
-  fridgeMinDistance: 0
-  fridgeMaxDistance: 0
+  plantAC: {fileID: 8300000, guid: ec05119223441c3478be4e373dfec942, type: 3}
+  plantVolume: 1
+  plantMinDistance: 1
+  plantMaxDistance: 3
+  plantPitchSwift: 0.2
+  fridgeAC: {fileID: 8300000, guid: 8946531baf87c024ba66570f1f03e130, type: 3}
+  fridgeVolume: 1
+  fridgeMinDistance: 1
+  fridgeMaxDistance: 5
   fridgePitchSwift: 0
-  glitchAC: {fileID: 0}
-  glitchVolume: 0
-  glitchMinDistance: 0
-  glitchMaxDistance: 0
-  glitchPitchSwift: 0
+  glitchAC: {fileID: 8300000, guid: b09f9403dccfb8c458a5cf48bfd6b1e9, type: 3}
+  glitchVolume: 1
+  glitchMinDistance: 1
+  glitchMaxDistance: 5
+  glitchPitchSwift: 0.05
   naturalMusicAC: {fileID: 0}
   insane1MusicAC: {fileID: 0}
   insane2MusicAC: {fileID: 0}

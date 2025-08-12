@@ -64,8 +64,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
-
     #region Individual Play Methods
     private AudioSource PlayCatSound(GameObject gameObject)
     {
@@ -188,6 +186,14 @@ public class AudioManager : MonoBehaviour
             aS.maxDistance = maxDistance;
             aS.loop = loop;
             aS.spatialBlend = 1;
+
+            aS.rolloffMode = AudioRolloffMode.Linear;
+            
+            //AnimationCurve rollOffCurve = new AnimationCurve();
+            //rollOffCurve.AddKey(0f, 1f);
+            //rollOffCurve.AddKey(minDistance, 1f);
+            //rollOffCurve.AddKey(maxDistance, 0f);
+            //aS.SetCustomCurve(AudioSourceCurveType.CustomRolloff, rollOffCurve);
 
             aS.Play();
             _aSList.Add(aS);
