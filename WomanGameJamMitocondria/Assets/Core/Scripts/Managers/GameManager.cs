@@ -18,27 +18,31 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-            DontDestroyOnLoad(this);
-        }
         else
             Destroy(gameObject);
 
         CurrentPhase = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
     }
 
+    private void Start()
+    {
+        if (_currentPhase == SceneManager.Scenes.Tutorial)
+            DialogueManager.Instance.TriggerDialogue(1);
+    }
+
     public void EndTask()
     {
         switch (_currentPhase)
         {
+            case SceneManager.Scenes.Tutorial:
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase1));
+                break;
             case SceneManager.Scenes.Phase1:
-                CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase2);
-                SceneManager.Instance.LoadScene(CurrentPhase);
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase2));
                 break;
             case SceneManager.Scenes.Phase2:
-                CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase3);
-                SceneManager.Instance.LoadScene(CurrentPhase);
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase3));
                 break;
             case SceneManager.Scenes.Phase3:
                 Win();
@@ -48,14 +52,12 @@ public class GameManager : MonoBehaviour
 
     public void BeginPlay()
     {
-        CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase1);
-        SceneManager.Instance.LoadScene(CurrentPhase);
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Tutorial));
     }
 
     public void EndPlay()
     {
-        CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.TitleScreen);
-        SceneManager.Instance.LoadScene(CurrentPhase);
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.TitleScreen));
     }
 
     public void Win()
@@ -77,8 +79,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeWaitForEndPlay);
 
-        CurrentPhase = ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Credits);
-        SceneManager.Instance.LoadScene(4);
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Credits));
     }
 
     public void GameOver()
@@ -90,10 +91,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(14f);
 
-        SceneManager.Instance.LoadScene(0);
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.TitleScreen));
     }
 
-    private SceneManager.Scenes ConvertUnitySceneToSceneManagerScene(int value)
+    public SceneManager.Scenes ConvertUnitySceneToSceneManagerScene(int value)
     {
         switch (value) 
         {
@@ -107,12 +108,14 @@ public class GameManager : MonoBehaviour
                 return SceneManager.Scenes.Phase3;
             case (4):
                 return SceneManager.Scenes.Credits;
+            case (5):
+                return SceneManager.Scenes.Tutorial;
             default:
                 throw new Exception($"Unable to load scene with build index {value}.");
         }
     }
 
-    private int ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes value)
+    public int ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes value)
     {
         switch (value)
         {
@@ -126,6 +129,8 @@ public class GameManager : MonoBehaviour
                 return 3;
             case SceneManager.Scenes.Credits:
                 return 4;
+            case SceneManager.Scenes.Tutorial:
+                return 5;
             default:
                 throw new Exception($"Unable to find build index for scene {value}.");
         }

@@ -10,11 +10,12 @@ public class Computer : MonoBehaviour, IInteractable
         _interactionPrompt.SetActive(false);
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         // It would probably change once we have the interaction working properly
         // For early-testing pourposes, it's implemented like this
         _work.IsWorking = !_work.IsWorking;
+        _interactionPrompt.SetActive(!_work.IsWorking);
     }
     public void EnterInteractState()
     {
