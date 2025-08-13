@@ -189,6 +189,17 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
+    public AudioSource PlayUIHover()
+    {
+        _db.hoverCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.hoverVolume);
+        return CreateAudioSource(gameObject, _db.hoverAC, _db.hoverCurrentVolume, 0, 1, 1);
+    }
+
+    public AudioSource PlayUIClick()
+    {
+        _db.clickCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.clickVolume);
+        return CreateAudioSource(gameObject, _db.clickAC, _db.clickCurrentVolume, 0, 1, 1);
+    }
     #endregion
 
     #region Music
