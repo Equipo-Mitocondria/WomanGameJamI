@@ -35,6 +35,7 @@ public class Character : FSMTemplateMachine
     public float MovementForce { get { return _movementForce; } }
     public float MaxVelocity { get { return _maxVelocity; } }
     public IInteractable InteractiveObject { get { return _interactiveObject; } set { _interactiveObject = value; } }
+    public Sanity Sanity { get { return _sanity; } }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()

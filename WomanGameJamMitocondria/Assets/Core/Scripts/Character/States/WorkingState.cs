@@ -32,6 +32,17 @@ public class WorkingState : FSMTemplateState
             return;
         }
 
+        if (((Character)_fsm).Sanity != null)
+        {
+            if(((Character)_fsm).Sanity.SanityPercentage == 1)
+            {
+                ((Character)_fsm).ChangeState(((Character)_fsm).exploringState);
+                ((Character)_fsm).IsWorking = false;
+                ((Character)_fsm).MoveToPreWorkingPosition();
+                return;
+            }
+        }
+
         if (!((Character)_fsm).IsWorking)
             ((Character)_fsm).ChangeState(((Character)_fsm).exploringState);
     }
