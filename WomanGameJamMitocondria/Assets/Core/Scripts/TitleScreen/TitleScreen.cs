@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class TitleScreen : MonoBehaviour
@@ -8,13 +10,20 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Button _volumeButton;
     [SerializeField] private Button _howToPlayButton;
     [SerializeField] private Button _exitButton;
-    [SerializeField] private GameObject _howToPlayBox;
+    [SerializeField] private GameObject _howToPlayBoxA;
+    [SerializeField] private GameObject _howToPlayBoxB;
 
     private Color _color;
+
+    private InputActions _inputActions;
 
     private void Start()
     {
         _color = _startButton.GetComponentInChildren<TMP_Text>().color;
+        _inputActions = new InputActions();
+
+        _howToPlayBoxA.SetActive(false);
+        _howToPlayBoxA.SetActive(false);
     }
 
     public void PlayStartButton()
@@ -32,9 +41,26 @@ public class TitleScreen : MonoBehaviour
     public void PlayHowToPlayButton()
     {
         AudioManager.Instance.PlayUIClick();
-        // TO DO
+        _howToPlayBoxA.SetActive(true);
+        _inputActions.UI.TriggerHowToPlay.performed += TriggerNextHowToPlayPanel;
+        _inputActions.UI.Enable();
     }
-    
+
+    private void TriggerNextHowToPlayPanel(InputAction.CallbackContext context)
+    {
+        _howToPlayBoxA.SetActive(false);
+        _howToPlayBoxB.SetActive(true);
+        _inputActions.UI.TriggerHowToPlay.performed -= TriggerNextHowToPlayPanel;
+        _inputActions.UI.TriggerHowToPlay.performed += CloseHowToPlayPanel;
+    }
+
+    private void CloseHowToPlayPanel(InputAction.CallbackContext context)
+    {
+        _howToPlayBoxB.SetActive(false);
+        _inputActions.UI.TriggerHowToPlay.performed -= CloseHowToPlayPanel;
+        _inputActions.UI.Disable();
+    }
+
     public void PlayExitButton()
     {
         AudioManager.Instance.PlayUIClick();
@@ -83,5 +109,15 @@ public class TitleScreen : MonoBehaviour
     public void StopHoverExitButton()
     {
         _exitButton.GetComponentInChildren<TMP_Text>().color = _color;
+    }
+
+    private void OnDisable()
+    {
+        _inputActions = new InputActions();
+    }
+
+    private void OnEnable()
+    {
+        _inputActions = new InputActions();
     }
 }
