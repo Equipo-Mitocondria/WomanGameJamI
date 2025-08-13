@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d562e75120792324e8e2b651795fbe46, type: 3}
   m_Name: AudioDatabase
   m_EditorClassIdentifier: 
+  hoverAC: {fileID: 8300000, guid: e3b88f56c713cdc4b8236dbe058952b2, type: 3}
+  hoverVolume: 0.15
+  clickAC: {fileID: 8300000, guid: 89d93ae2c9dcb164d87af66bf8d86d8d, type: 3}
+  clickVolume: 0.2
   catAC: {fileID: 8300000, guid: bdbcbcc2635ac3145809ba284c94914c, type: 3}
   catVolume: 0.5
   catMinDistance: 1
@@ -47,7 +51,7 @@ MonoBehaviour:
   waterBottleMinDistance: 1
   waterBottleMaxDistance: 10
   waterBottlePitchSwift: 0
-  showerAC: {fileID: 8300000, guid: 7c2d6e8fd4152ea46a76a9d217ddae55, type: 3}
+  showerAC: {fileID: 8300000, guid: e79c3e1a0c4d86a49bc721d381119943, type: 3}
   showerVolume: 0.05
   showerMinDistance: 1
   showerMaxDistance: 10
@@ -57,7 +61,7 @@ MonoBehaviour:
   showerLoopMinDistance: 1
   showerLoopMaxDistance: 6.5
   showerLoopPitchSwift: 0
-  tapAC: {fileID: 8300000, guid: 2d142da2e3fa79e4c9da8c8be471bfb9, type: 3}
+  tapAC: {fileID: 8300000, guid: 96aa00a73cfd8e74fa6c50da2cf3fa3e, type: 3}
   tapVolume: 0.05
   tapMinDistance: 1
   tapMaxDistance: 10

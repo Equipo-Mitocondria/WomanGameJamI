@@ -6,6 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Databases/AudioDatabase")]
 public class AudioDatabase : ScriptableObject
 {
+    [Header("UI")]
+    public AudioClip hoverAC;
+    [Range(0, 1)] public float hoverVolume;
+    [NonSerialized] public float hoverCurrentVolume;
+
+    public AudioClip clickAC;
+    [Range(0, 1)] public float clickVolume;
+    [NonSerialized] public float clickCurrentVolume;
+
     [Header("SFX")]
     public AudioClip catAC;
     [Range(0, 1)] public float catVolume;
