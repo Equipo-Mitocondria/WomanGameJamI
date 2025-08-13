@@ -204,6 +204,34 @@
             "id": "184fc16b-5b67-433c-99e5-0ad961b1778d",
             "actions": [],
             "bindings": []
+        },
+        {
+            "name": "UI",
+            "id": "b7f2c43e-bf30-480c-9edb-14adb7ad751d",
+            "actions": [
+                {
+                    "name": "TriggerHowToPlay",
+                    "type": "Button",
+                    "id": "feeefd38-1cde-46b7-b6fb-82cbc2871937",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "01ec12f9-1ff3-4942-a0e2-3a071d0469b7",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerHowToPlay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
