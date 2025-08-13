@@ -2683,7 +2683,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1626a1eb23e3c6b41b8fe162bf5286f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeWaitForEndPlay: 0
+  _timeWaitForEndPlay: 2
+  _canvas: {fileID: 2007451403}
+  _deathScreenPrefab: {fileID: 7277463168935269178, guid: 199c454583394da479a785582c45e473, type: 3}
 --- !u!4 &285226309
 Transform:
   m_ObjectHideFlags: 0
@@ -3270,6 +3272,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1043077432}
     m_Modifications:
+    - target: {fileID: 437219048346940527, guid: 35040e6b0618a7445a14d47fa5c35d91, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 437219048346940527, guid: 35040e6b0618a7445a14d47fa5c35d91, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 47ea73de4cafff542b330c99988b228c, type: 2}
     - target: {fileID: 5422303213289627296, guid: 35040e6b0618a7445a14d47fa5c35d91, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.9785309
@@ -4025,6 +4035,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _notificationPeriod: 10
   _notificationChance: 0.4
+  _spawnIntroductionNotification: 1
+  _startNotificationRoutine: 1
 --- !u!4 &700203257
 Transform:
   m_ObjectHideFlags: 0
@@ -7597,6 +7609,10 @@ PrefabInstance:
       propertyPath: _isOneUse
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 409807032172135740, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
+      propertyPath: _meshGlowing
+      value: 
+      objectReference: {fileID: 1012630922}
     - target: {fileID: 1752990089067803167, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7641,6 +7657,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cat
       objectReference: {fileID: 0}
+    - target: {fileID: 2693490301335109013, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693490301335109013, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 47ea73de4cafff542b330c99988b228c, type: 2}
     - target: {fileID: 6229440072945276378, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.57574
@@ -7673,6 +7697,11 @@ PrefabInstance:
 --- !u!4 &1012630921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1752990089067803167, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
+  m_PrefabInstance: {fileID: 1012630920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1012630922 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2693490301335109013, guid: dfd8d1d0ada446844a4316ac4a6344be, type: 3}
   m_PrefabInstance: {fileID: 1012630920}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1014031522
@@ -14464,6 +14493,10 @@ PrefabInstance:
       propertyPath: _dialogueID
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2921010127193610440, guid: 2c5972c4fa28ca24593b745e5b7773bd, type: 3}
+      propertyPath: _meshGlowing
+      value: 
+      objectReference: {fileID: 2145678449}
     - target: {fileID: 3066246201619350680, guid: 2c5972c4fa28ca24593b745e5b7773bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.707733
@@ -14532,6 +14565,11 @@ PrefabInstance:
 --- !u!4 &2145678448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3066246201619350680, guid: 2c5972c4fa28ca24593b745e5b7773bd, type: 3}
+  m_PrefabInstance: {fileID: 2145678447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2145678449 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3117079565773629671, guid: 2c5972c4fa28ca24593b745e5b7773bd, type: 3}
   m_PrefabInstance: {fileID: 2145678447}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

@@ -8,6 +8,8 @@ public class TutorialComputer : Computer
     [SerializeField] private GameObject _tutorialInteractionPrompt;
     [SerializeField] private TutorialDialogueManager _tutorialDialogueManager;
 
+    [SerializeField] private MeshRenderer[] _meshesGlowing;
+
     public override void Interact()
     {
         base.Interact();
@@ -15,6 +17,7 @@ public class TutorialComputer : Computer
         if (_isFirstTimeInteract)
         {
             _isFirstTimeInteract = false;
+            RemoveGlowingMaterial();
             NotificationsManager.Instance.TutorialNotificationSpawn();
             _tutorialDialogueManager.PrepareToShowTutorialInteractionPrompt();
             _tutorialCat.SetActive(true);
@@ -33,5 +36,20 @@ public class TutorialComputer : Computer
     public void HideTutorialInteractionPrompt()
     {
         _tutorialInteractionPrompt.SetActive(false);
+    }
+
+    private void RemoveGlowingMaterial()
+    {
+        foreach (var mesh in _meshesGlowing)
+        {
+            Material[] newMaterials = new Material[mesh.materials.Length - 1];
+
+            for (int i = 0; i < newMaterials.Length; i++)
+            {
+                newMaterials[i] = mesh.materials[i];
+            }
+
+            mesh.materials = newMaterials;
+        }
     }
 }

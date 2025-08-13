@@ -11,6 +11,8 @@ public class SanityObject : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private bool _hasDialogue;
     [SerializeField] private int _dialogueID;
+    [Space]
+    [SerializeField] private MeshRenderer _meshGlowing;
 
     private bool _available = true;
 
@@ -36,6 +38,11 @@ public class SanityObject : MonoBehaviour, IInteractable
         {
             _available = false;
             _interactionPrompt.SetActive(false);
+
+            if (_meshGlowing != null)
+            {
+                RemoveGlowingMaterial();
+            }
         }
     }
 
@@ -52,5 +59,17 @@ public class SanityObject : MonoBehaviour, IInteractable
     public void ExitInteractState()
     {
         _interactionPrompt.SetActive(false);
+    }
+
+    private void RemoveGlowingMaterial()
+    {
+        Material[] newMaterials = new Material[_meshGlowing.materials.Length - 1];
+
+        for (int i = 0; i < newMaterials.Length; i++)
+        {
+            newMaterials[i] = _meshGlowing.materials[i];
+        }
+
+        _meshGlowing.materials = newMaterials;
     }
 }

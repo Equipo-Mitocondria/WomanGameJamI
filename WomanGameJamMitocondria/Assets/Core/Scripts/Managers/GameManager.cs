@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum Scenes { TitleScreen = 0, Phase1 = 1, Phase2 = 2, Phase3 = 3, Credits = 4, Tutorial = 5, TitleScreenBad = 6 }
+
     public static GameManager Instance;
     
     [SerializeField] private float _timeWaitForEndPlay;
+    [Space]
+    [SerializeField] private GameObject _mainCanvas;
+    [SerializeField] private GameObject _deathScreenPrefab;
 
-    private SceneManager.Scenes _currentPhase;
+    private Scenes _currentPhase;
     private float _time;
     private bool _hasWin = false;
 
@@ -27,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (_currentPhase == SceneManager.Scenes.Tutorial)
+        if (_currentPhase == Scenes.Tutorial)
             DialogueManager.Instance.TriggerDialogue(1);
     }
 
@@ -35,29 +40,34 @@ public class GameManager : MonoBehaviour
     {
         switch (_currentPhase)
         {
-            case SceneManager.Scenes.Tutorial:
-                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase1));
+            case Scenes.Tutorial:
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Phase1));
                 break;
-            case SceneManager.Scenes.Phase1:
-                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase2));
+            case Scenes.Phase1:
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Phase2));
                 break;
-            case SceneManager.Scenes.Phase2:
-                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Phase3));
+            case Scenes.Phase2:
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Phase3));
                 break;
-            case SceneManager.Scenes.Phase3:
+            case Scenes.Phase3:
                 Win();
                 break;
         }
     }
 
+    public void Continue()
+    {
+        SceneManager.Instance.LoadScene(CurrentPhase);
+    }
+
     public void BeginPlay()
     {
-        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Tutorial));
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Tutorial));
     }
 
     public void EndPlay()
     {
-        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.TitleScreen));
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.TitleScreenBad));
     }
 
     public void Win()
@@ -79,7 +89,14 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeWaitForEndPlay);
 
-        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.Credits));
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Credits));
+    }
+
+    public void DeathScreen()
+    {
+        _mainCanvas.gameObject.SetActive(false);
+        NotificationsManager.Instance.gameObject.SetActive(false);
+        Instantiate(_deathScreenPrefab);
     }
 
     public void GameOver()
@@ -91,46 +108,50 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(14f);
 
-        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes.TitleScreen));
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.TitleScreenBad));
     }
 
-    public SceneManager.Scenes ConvertUnitySceneToSceneManagerScene(int value)
+    public Scenes ConvertUnitySceneToSceneManagerScene(int value)
     {
         switch (value) 
         {
             case (0):
-                return SceneManager.Scenes.TitleScreen;
+                return Scenes.TitleScreen;
             case (1):
-                return SceneManager.Scenes.Phase1;
+                return Scenes.Phase1;
             case (2):
-                return SceneManager.Scenes.Phase2;
+                return Scenes.Phase2;
             case (3):
-                return SceneManager.Scenes.Phase3;
+                return Scenes.Phase3;
             case (4):
-                return SceneManager.Scenes.Credits;
+                return Scenes.Credits;
             case (5):
-                return SceneManager.Scenes.Tutorial;
+                return Scenes.Tutorial;
+            case (6):
+                return Scenes.TitleScreenBad;
             default:
                 throw new Exception($"Unable to load scene with build index {value}.");
         }
     }
 
-    public int ConvertSceneManagerSceneToUnityBuildIndex(SceneManager.Scenes value)
+    public int ConvertSceneManagerSceneToUnityBuildIndex(Scenes value)
     {
         switch (value)
         {
-            case SceneManager.Scenes.TitleScreen:
+            case Scenes.TitleScreen:
                 return 0;
-            case SceneManager.Scenes.Phase1:
+            case Scenes.Phase1:
                 return 1;
-            case SceneManager.Scenes.Phase2:
+            case Scenes.Phase2:
                 return 2;
-            case SceneManager.Scenes.Phase3:
+            case Scenes.Phase3:
                 return 3;
-            case SceneManager.Scenes.Credits:
+            case Scenes.Credits:
                 return 4;
-            case SceneManager.Scenes.Tutorial:
+            case Scenes.Tutorial:
                 return 5;
+            case Scenes.TitleScreenBad:
+                return 6;
             default:
                 throw new Exception($"Unable to find build index for scene {value}.");
         }
