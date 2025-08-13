@@ -72,10 +72,10 @@ MonoBehaviour:
   _sanityEffect: {fileID: 11400000, guid: 2dcfffc0f5346ee44a37307e667356a2, type: 2}
   _interactionPrompt: {fileID: 5106695664401966072}
   _isOneUse: 1
-  _hasSound: 0
-  _soundEffect: 0
+  _hasSound: 1
+  _soundEffect: 11
   _hasDialogue: 1
-  _dialogueID: 8
+  _dialogueID: 11
 --- !u!114 &2091518368199326069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b0e89192fd66e4791357beec11fd2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundEffect: 11
+  _soundEffect: 15
 --- !u!1001 &54811629338691954
 PrefabInstance:
   m_ObjectHideFlags: 0

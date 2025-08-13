@@ -74,7 +74,7 @@ MonoBehaviour:
   _hasSound: 1
   _soundEffect: 9
   _hasDialogue: 1
-  _dialogueID: 7
+  _dialogueID: 8
 --- !u!1001 &2729131556252379421
 PrefabInstance:
   m_ObjectHideFlags: 0

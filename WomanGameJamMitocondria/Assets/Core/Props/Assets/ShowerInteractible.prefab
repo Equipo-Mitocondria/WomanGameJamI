@@ -79,8 +79,8 @@ MonoBehaviour:
   _sanityEffect: {fileID: 11400000, guid: c51886b68c492f44188f1c8af0e21f43, type: 2}
   _interactionPrompt: {fileID: 267349009386723257}
   _isOneUse: 1
-  _hasSound: 0
-  _soundEffect: 0
+  _hasSound: 1
+  _soundEffect: 8
   _hasDialogue: 1
   _dialogueID: 9
 --- !u!1001 &5019766208807025971
