@@ -31,12 +31,25 @@ public class NotificationsManager : MonoBehaviour
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
         notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, GameManager.Instance.CurrentPhase));
 
-        if(GameManager.Instance.CurrentPhase != 3)
-            NotificationSpawnWithID(0);
-
-        _notificationCoroutine = StartCoroutine(NotificationPeriod());
+        switch (GameManager.Instance.ConvertUnitySceneToSceneManagerScene(GameManager.Instance.CurrentPhase))
+        {
+            case SceneManager.Scenes.Phase1:
+            case SceneManager.Scenes.Phase2:
+                NotificationSpawnWithID(0);
+                _notificationCoroutine = StartCoroutine(NotificationPeriod());
+                break;
+            case SceneManager.Scenes.Phase3:
+                _notificationCoroutine = StartCoroutine(NotificationPeriod());
+                break;
+            case SceneManager.Scenes.Tutorial:
+                break;
+        }
     }
 
+    public void TutorialNotificationSpawn()
+    {
+        NotificationSpawnWithID(0);
+    }
 
     private IEnumerator NotificationPeriod()
     {

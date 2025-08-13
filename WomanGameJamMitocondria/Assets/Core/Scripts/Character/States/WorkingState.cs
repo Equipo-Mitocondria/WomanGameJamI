@@ -26,12 +26,6 @@ public class WorkingState : FSMTemplateState
 
     public override void UpdateLogic() 
     {
-        if (((Character)_fsm).IsDying)
-        {
-            ((Character)_fsm).ChangeState(((Character)_fsm).dyingState);
-            return;
-        }
-
         if (((Character)_fsm).Sanity != null)
         {
             if(((Character)_fsm).Sanity.SanityPercentage == 1)

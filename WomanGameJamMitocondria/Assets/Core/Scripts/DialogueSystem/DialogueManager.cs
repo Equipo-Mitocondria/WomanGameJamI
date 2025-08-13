@@ -9,10 +9,10 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
     [SerializeField] private int _currentLevel;
-    [SerializeField] private int _timeBetweenDialogues;
+    [SerializeField] protected int _timeBetweenDialogues;
     private DialogueBST _dialogueBST;
     private bool _doNextDialogue = false;
-    private bool _isInDialogue = false;
+    protected bool _isInDialogue = false;
     private Coroutine _showDialogueCoroutine;
 
     private void Awake()
@@ -20,11 +20,8 @@ public class DialogueManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(gameObject);        
-    }
+            Destroy(gameObject);
 
-    private void Start()
-    {
         string csv = CSVImporter.ImportCSV(Application.streamingAssetsPath + "/DialoguesSimplified.csv");
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
         _dialogueBST = new DialogueBST(DialogueBuilder.BuildDialogueListsList(parsedCSV, _currentLevel));
@@ -45,7 +42,7 @@ public class DialogueManager : MonoBehaviour
         return _dialogueBST.Search(id);
     }
 
-    IEnumerator ShowDialogues(List<DialogueNode> dialogueNodes)
+    protected virtual IEnumerator ShowDialogues(List<DialogueNode> dialogueNodes)
     {
         UIManager.Instance.ShowDialoguePanel();
         foreach (DialogueNode node in dialogueNodes)

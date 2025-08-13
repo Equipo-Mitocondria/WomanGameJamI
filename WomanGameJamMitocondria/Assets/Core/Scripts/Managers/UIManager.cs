@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _notificationHud;
     [SerializeField] private int _maxNumberNotification;
     [SerializeField] private float _timeBetweenNotifications;
-    [SerializeField] private float _timeBeforeClearNotifications;
+    [SerializeField] protected float _timeBeforeClearNotifications;
 
     private List<NotificationHUDPanel> _notificationHUDList;
     private Coroutine _activeNotificationThread;
@@ -32,14 +32,10 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
             _notificationHUDList = new List<NotificationHUDPanel>();
+            _dialoguePanel.SetActive(false);
         }
         else
             Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        _dialoguePanel.SetActive(false);
     }
 
     public void StartNotificationThread(List<NotificationNode> notificationNodes)
@@ -87,7 +83,7 @@ public class UIManager : MonoBehaviour
         _notificationHUDList.Add(notificationHUD);
     }
 
-    private IEnumerator StopNotificationThread()
+    protected virtual IEnumerator StopNotificationThread()
     {
         yield return new WaitForSeconds(_timeBeforeClearNotifications);
 
@@ -119,7 +115,7 @@ public class UIManager : MonoBehaviour
         _notificationHUDList.Remove(first);
     }
 
-    private void ClearNotifications()
+    protected void ClearNotifications()
     {
         foreach(var element in _notificationHUDList)
         {
