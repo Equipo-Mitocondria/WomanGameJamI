@@ -17,7 +17,7 @@ public class Tween : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void TweenNumber(float startValue, float endValue, float duration, Action<float> onUpdate)
+    public void TweenSanity(float startValue, float endValue, float duration, Action<float> onUpdate)
     {
         if (_tweenSanityCoroutine != null)
         {
@@ -28,9 +28,14 @@ public class Tween : MonoBehaviour
         _tweenSanityCoroutine = StartCoroutine(TweenNumberCoroutine(startValue, endValue, duration, onUpdate));
     }
 
+    public void TweenVolume(float startValue, float endValue, float duration, Action<float> onUpdate)
+    {
+        StartCoroutine(TweenNumberCoroutine(startValue, endValue, duration, onUpdate));
+    }
+
     private IEnumerator TweenNumberCoroutine(float startValue, float endValue, float duration, Action<float> onUpdate)
     {
-        if (duration <= 0f)
+        if (duration <= 0f || startValue == endValue)
         {
             onUpdate?.Invoke(endValue);
             yield break;

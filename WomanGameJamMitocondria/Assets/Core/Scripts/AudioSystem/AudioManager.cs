@@ -10,14 +10,21 @@ public class AudioManager : MonoBehaviour
     private static AudioManager _instance;
     public static AudioManager Instance { get { return _instance; } }
 
-    //References
+    [Header("References")]
     [SerializeField] private AudioDatabase _db;
     [SerializeField] private GameObject _audioListenerGO;
+
+    [Header("Parameters")]
+    [SerializeField] private const float _musicTransitionTime = 2f;
 
     [NonSerialized] public UnityEvent OnMusicLoopPointReached = new UnityEvent();
 
     //Private Variables
     private List<AudioSource> _aSList = new List<AudioSource>();
+    private Dictionary<MusicPiece, AudioSource> _musicDictionary = new Dictionary<MusicPiece, AudioSource>();
+    private bool _firstMusicUpdate = true;
+    private AudioSource _heartBeatAS;
+    private AudioSource _earRingAS;
 
     private void Awake()
     {
@@ -49,8 +56,10 @@ public class AudioManager : MonoBehaviour
                 return PlayNotificationSound(gameObject);
             case SoundEffect.WaterBottle:
                 return PlayWaterBottleSound(gameObject);
-            case SoundEffect.WaterStream:
-                return PlayWaterStreamSound(gameObject);
+            case SoundEffect.Shower:
+                return PlayShowerSound(gameObject);
+            case SoundEffect.ShowerLoop:
+                return PlayShowerLoopSound(gameObject);
             case SoundEffect.Tap:
                 return PlayTapSound(gameObject);
             case SoundEffect.Plant:
@@ -59,6 +68,18 @@ public class AudioManager : MonoBehaviour
                 return PlayFridgeSound(gameObject);
             case SoundEffect.Glitch:
                 return PlayGlitchSound(gameObject);
+            case SoundEffect.Mirror:
+                return PlayMirrorSound(gameObject);
+            case SoundEffect.Bookshelf:
+                return PlayBookshelfSound(gameObject);
+            case SoundEffect.FridgeLoop:
+                return PlayFridgeLoopSound(gameObject);
+            case SoundEffect.Heartbeat:
+                return PlayHeartBeatLoopSound(gameObject);
+            case SoundEffect.EarRing:
+                return PlayEarRingSound(gameObject);
+            case SoundEffect.Step:
+                return PlayStepSound(gameObject);
             default:
                 throw new Exception($"Unable to find {soundEffect.ToString()} audio.");
         }
@@ -107,10 +128,16 @@ public class AudioManager : MonoBehaviour
         return CreateAudioSource(gameObject, _db.waterBottleAC, _db.waterBottleCurrentVolume, _db.waterBottlePitchSwift, _db.waterBottleMinDistance, _db.waterBottleMaxDistance);
     }
 
-    private AudioSource PlayWaterStreamSound(GameObject gameObject)
+    private AudioSource PlayShowerSound(GameObject gameObject)
     {
-        _db.waterStreamCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.waterStreamVolume);
-        return CreateAudioSource(gameObject, _db.waterStreamAC, _db.waterStreamCurrentVolume, _db.waterStreamPitchSwift, _db.waterStreamMinDistance, _db.waterStreamMaxDistance);
+        _db.showerCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.showerVolume);
+        return CreateAudioSource(gameObject, _db.showerAC, _db.showerCurrentVolume, _db.showerPitchSwift, _db.showerMinDistance, _db.showerMaxDistance);
+    }
+
+    private AudioSource PlayShowerLoopSound(GameObject gameObject)
+    {
+        _db.showerLoopCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.showerLoopVolume);
+        return CreateAudioSource(gameObject, _db.showerLoopAC, _db.showerLoopCurrentVolume, _db.showerLoopPitchSwift, _db.showerLoopMinDistance, _db.showerLoopMaxDistance, true);
     }
 
     private AudioSource PlayTapSound(GameObject gameObject)
@@ -137,22 +164,181 @@ public class AudioManager : MonoBehaviour
         return CreateAudioSource(gameObject, _db.glitchAC, _db.glitchCurrentVolume, _db.glitchPitchSwift, _db.glitchMinDistance, _db.glitchMaxDistance);
     }
 
-    public AudioSource PlayNotificationPopUp()
+    private AudioSource PlayMirrorSound(GameObject gameObject)
     {
-        //TO DO
-        return new AudioSource();
+        _db.mirrorCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.mirrorVolume);
+        return CreateAudioSource(gameObject, _db.mirrorAC, _db.mirrorCurrentVolume, _db.mirrorPitchSwift, _db.mirrorMinDistance, _db.mirrorMaxDistance);
+    }
+
+    private AudioSource PlayBookshelfSound(GameObject gameObject)
+    {
+        _db.bookshelfCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.bookshelfVolume);
+        return CreateAudioSource(gameObject, _db.bookshelfAC, _db.bookshelfCurrentVolume, _db.bookshelfPitchSwift, _db.bookshelfMinDistance, _db.bookshelfMaxDistance);
+    }
+
+    private AudioSource PlayFridgeLoopSound(GameObject gameObject)
+    {
+        _db.fridgeLoopCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.fridgeLoopVolume);
+        return CreateAudioSource(gameObject, _db.fridgeLoopAC, _db.fridgeLoopCurrentVolume, _db.fridgeLoopPitchSwift, _db.fridgeLoopMinDistance, _db.fridgeLoopMaxDistance, true);
+    }
+
+    private AudioSource PlayStepSound(GameObject gameObject)
+    {
+        _db.stepCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.stepVolume);
+        return CreateAudioSource(gameObject, _db.stepAC, _db.stepCurrentVolume, _db.stepPitchSwift, _db.stepMinDistance, _db.stepMaxDistance);
     }
     #endregion
-    
+
     #endregion
 
     #region Music
-    public AudioSource PlayMusic(GameObject gameObject)
+    public void PlayMusic(MusicPiece musicPiece, GameObject gameObject)
+    {
+        AudioSource naturalAS = CreateMusicAudioSource(MusicPiece.Natural, gameObject);
+        AudioSource insane1AS = CreateMusicAudioSource(MusicPiece.Insane1, gameObject);
+        AudioSource insane2AS = CreateMusicAudioSource(MusicPiece.Insane2, gameObject);
+        AudioSource deathCountdownAS = CreateMusicAudioSource(MusicPiece.DeathCountdown, gameObject);
+        AudioSource definitiveDeathAS = CreateMusicAudioSource(MusicPiece.DefinitiveDeath, gameObject);
+    }
+    
+    private AudioSource CreateMusicAudioSource(MusicPiece musicPiece, GameObject gameObject)
     {
         _db.musicCurrentVolume = ChangeMusicVolumeAsPerModifier(_db.musicVolume);
-        return CreateMusicAudioSource(_db.naturalMusicAC, _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance);
+
+        switch (musicPiece)
+        {
+            case MusicPiece.Natural:
+                return CreateMusicAudioSource(_db.naturalMusicAC, _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance, musicPiece, gameObject);
+            case MusicPiece.Insane1:
+                return CreateMusicAudioSource(_db.insane1MusicAC, _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance, musicPiece, gameObject);
+            case MusicPiece.Insane2:
+                return CreateMusicAudioSource(_db.insane2MusicAC, _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance, musicPiece, gameObject);
+            case MusicPiece.DeathCountdown:
+                return CreateMusicAudioSource(_db.deathCountdownMusicAC, _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance, musicPiece, gameObject);
+            case MusicPiece.DefinitiveDeath:
+                return CreateMusicAudioSource(_db.definitiveDeathMusicAC, _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance, musicPiece, gameObject);
+            default:
+                throw new Exception($"Cannot play {musicPiece.ToString()} music.");
+        }
+
+        //return CreateMusicAudioSource(_db.naturalMusicACs[0], _db.musicCurrentVolume, _db.musicMinDistance, _db.musicMaxDistance, musicPiece);
+        
+    }
+
+    public void ChangeMusic(MusicPiece musicPiece, float duration = _musicTransitionTime)
+    {
+        if (_firstMusicUpdate)
+        {
+            ChangeMusicAudioSourcesVolumes(musicPiece, 0);
+            _firstMusicUpdate = false;
+        }
+        else
+            ChangeMusicAudioSourcesVolumes(musicPiece, _musicTransitionTime);
     }
     #endregion
+
+    #region Death Countdown Sounds
+    public void UpdateMusicVolumesBasedOnDeathCountdownPercentage(float percentage)
+    {
+        foreach (KeyValuePair<MusicPiece, AudioSource> keyPair in _musicDictionary)
+        {
+            if(keyPair.Value.volume == 0)
+                continue;
+
+            keyPair.Value.volume = percentage;
+        }
+    }
+
+    #region HeartBeat Loop
+    private AudioSource PlayHeartBeatLoopSound(GameObject gameObject)
+    {
+        StopHeartBeat();
+
+        _db.heartBeatLoopCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.heartBeatLoopVolume);
+        _heartBeatAS = CreateAudioSource(gameObject, _db.heartBeatLoopAC, _db.heartBeatLoopCurrentVolume, _db.heartBeatLoopPitchSwift, _db.heartBeatLoopMinDistance, _db.heartBeatLoopMaxDistance, true);
+        return _heartBeatAS;
+    }
+
+    public void UpdateHeartBeatSpeed(float percentage)
+    {
+        if(_heartBeatAS != null)
+            _heartBeatAS.pitch = ConvertHeartBeatPercentageToPitch(percentage);
+    }
+
+    public void StopHeartBeat(bool continueUntilEnd = false)
+    {
+        if (_heartBeatAS != null)
+        {
+            if(continueUntilEnd)
+                StartCoroutine(StopHeartBeatOnAudioEnd());
+            else
+            {
+                StopAudioSource(_heartBeatAS);
+                _heartBeatAS = null;
+            }
+        }
+    }
+
+    private float ConvertHeartBeatPercentageToPitch(float percentage)
+    {
+        if (percentage < 0)
+            percentage = 0;
+        else if (percentage > 1)
+            percentage = 1;
+        return Mathf.Lerp(_db.heartBeatMinPitch, _db.heartBeatMaxPitch, percentage);
+    }
+
+    private IEnumerator StopHeartBeatOnAudioEnd()
+    {
+        int lastSample = 0;
+        int currentSample = _heartBeatAS.timeSamples;
+
+        while (currentSample <= lastSample)
+        {
+            lastSample = currentSample;
+            yield return null;
+        }
+
+        StopAudioSource(_heartBeatAS);
+    }
+    #endregion
+
+    #region Ear Ring
+    private AudioSource PlayEarRingSound(GameObject gameObject)
+    {
+        StopEarRing();
+
+        _db.earRingCurrentVolume = ChangeSFXVolumeAsPerModifier(_db.earRingVolume);
+        _earRingAS = CreateAudioSource(gameObject, _db.earRingAC, _db.earRingCurrentVolume, _db.earRingPitchSwift, _db.earRingMinDistance, _db.earRingMaxDistance, true);
+        return _earRingAS;
+    }
+
+    public void UpdateEarRingVolume(float percentage)
+    {
+        if (_earRingAS != null)
+            _earRingAS.volume = ConvertEarRingPercentageToVolume(percentage);
+    }
+
+    private float ConvertEarRingPercentageToVolume(float percentage)
+    {
+        if (percentage < 0)
+            percentage = 0;
+        else if (percentage > 1)
+            percentage = 1;
+        return Mathf.Lerp(_db.earRingMinVolume, _db.earRingCurrentVolume, percentage);
+    }
+
+    public void StopEarRing()
+    {
+        if (_earRingAS != null)
+        {            
+            StopAudioSource(_earRingAS);
+            _earRingAS = null;
+        }
+    }
+    #endregion
+    #endregion
+
 
     #region Stop Methods
     public void StopAudioSource(AudioSource aS)
@@ -207,33 +393,9 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
-    public void ChangeMusic(MusicPiece musicPiece, AudioSource aS)
+    private AudioSource CreateMusicAudioSource(AudioClip audioclip, float volume, float minDistance, float maxDistance, MusicPiece musicPiece, GameObject go)
     {
-        switch (musicPiece)
-        {
-            case MusicPiece.Natural:
-                aS.clip = _db.naturalMusicAC;
-                break;
-            case MusicPiece.Insane1:
-                aS.clip = _db.insane1MusicAC;
-                break;
-            case MusicPiece.Insane2:
-                aS.clip = _db.insane2MusicAC;
-                break;
-            case MusicPiece.DeathCountdown:
-                aS.clip = _db.deathCountdownMusicAC;
-                break;
-            case MusicPiece.DefinitiveDeath:
-                aS.clip = _db.definitiveDeathMusicAC;
-                break;
-            default:
-                throw new Exception($"Cannot find {musicPiece.ToString()} music piece.");
-        }
-    }
-
-    private AudioSource CreateMusicAudioSource(AudioClip audioclip, float volume, float minDistance, float maxDistance)
-    {
-        AudioSource aS = gameObject.AddComponent<AudioSource>();
+        AudioSource aS = go.AddComponent<AudioSource>();
 
         aS.clip = audioclip;
         aS.ignoreListenerPause = true;
@@ -241,7 +403,12 @@ public class AudioManager : MonoBehaviour
         aS.minDistance = minDistance;
         aS.maxDistance = maxDistance;
         aS.loop = true;
+        aS.spatialBlend = 1;
+        aS.rolloffMode = AudioRolloffMode.Linear;
         aS.Play();
+
+        _musicDictionary.Add(musicPiece, aS);
+
         return aS;
     }
 
@@ -311,5 +478,70 @@ public class AudioManager : MonoBehaviour
         else
             return 0f;
     }
+
+    private void ChangeMusicAudioSourcesVolumes(MusicPiece musicPiece, float transitionDuration)
+    {
+        foreach (KeyValuePair<MusicPiece, AudioSource> keyPair in _musicDictionary)
+        {
+            if (keyPair.Key == musicPiece)
+                Tween.Instance.TweenVolume(keyPair.Value.volume, _db.musicCurrentVolume, transitionDuration, value => keyPair.Value.volume = value);
+            else
+                Tween.Instance.TweenVolume(keyPair.Value.volume, 0, transitionDuration, value => keyPair.Value.volume = value);
+        }
+    }
+
+    //private void QueueMusic()
+    //{
+    //    QueueNaturalMusic();
+    //    QueueInsane1Music();
+    //    QueueInsane2Music();
+    //    QueueDeathCountdownMusic();
+    //    QueueDefinitiveDeathMusic();
+    //}
+
+    //private void QueueNaturalMusic()
+    //{
+    //    _naturalIndex++;
+    //    if(_naturalIndex >= _db.naturalMusicACs.Length)
+    //        _naturalIndex = 0;
+
+    //    _musicDictionary[MusicPiece.Natural].clip = _db.naturalMusicACs[_naturalIndex];
+    //}
+
+    //private void QueueInsane1Music()
+    //{
+    //    _insane1Index++;
+    //    if (_insane1Index >= _db.insane1MusicACs.Length)
+    //        _insane1Index = 0;
+
+    //    _musicDictionary[MusicPiece.Insane1].clip = _db.insane1MusicACs[_insane1Index];
+    //}
+
+    //private void QueueInsane2Music()
+    //{
+    //    _insane2Index++;
+    //    if (_insane2Index >= _db.insane2MusicACs.Length)
+    //        _insane2Index = 0;
+
+    //    _musicDictionary[MusicPiece.Insane2].clip = _db.insane2MusicACs[_insane2Index];
+    //}
+
+    //private void QueueDeathCountdownMusic()
+    //{
+    //    _deathCountdownIndex++;
+    //    if (_deathCountdownIndex >= _db.deathCountdownMusicACs.Length)
+    //        _deathCountdownIndex = 0;
+
+    //    _musicDictionary[MusicPiece.DeathCountdown].clip = _db.deathCountdownMusicACs[_deathCountdownIndex];
+    //}
+
+    //private void QueueDefinitiveDeathMusic()
+    //{
+    //    _definitiveDeathIndex++;
+    //    if (_definitiveDeathIndex >= _db.definitiveDeathMusicACs.Length)
+    //        _definitiveDeathIndex = 0;
+
+    //    _musicDictionary[MusicPiece.DefinitiveDeath].clip = _db.definitiveDeathMusicACs[_definitiveDeathIndex];
+    //}
     #endregion
 }

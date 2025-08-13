@@ -71,10 +71,10 @@ MonoBehaviour:
   _sanityEffect: {fileID: 11400000, guid: fede563d025c73949af37c95d50429a0, type: 2}
   _interactionPrompt: {fileID: 4251743678971515901}
   _isOneUse: 1
-  _hasSound: 0
-  _soundEffect: 0
+  _hasSound: 1
+  _soundEffect: 13
   _hasDialogue: 1
-  _dialogueID: 5
+  _dialogueID: 7
 --- !u!1001 &4988628958681635813
 PrefabInstance:
   m_ObjectHideFlags: 0

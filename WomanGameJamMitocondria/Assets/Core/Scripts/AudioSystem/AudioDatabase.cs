@@ -70,12 +70,21 @@ public class AudioDatabase : ScriptableObject
 
     [Space]
 
-    public AudioClip waterStreamAC;
-    [Range(0, 1)] public float waterStreamVolume;
-    public float waterStreamMinDistance;
-    public float waterStreamMaxDistance;
-    [Range(0, 1)] public float waterStreamPitchSwift;
-    [NonSerialized] public float waterStreamCurrentVolume;
+    public AudioClip showerAC;
+    [Range(0, 1)] public float showerVolume;
+    public float showerMinDistance;
+    public float showerMaxDistance;
+    [Range(0, 1)] public float showerPitchSwift;
+    [NonSerialized] public float showerCurrentVolume;
+
+    [Space]
+
+    public AudioClip showerLoopAC;
+    [Range(0, 1)] public float showerLoopVolume;
+    public float showerLoopMinDistance;
+    public float showerLoopMaxDistance;
+    [Range(0, 1)] public float showerLoopPitchSwift;
+    [NonSerialized] public float showerLoopCurrentVolume;
 
     [Space]
 
@@ -111,7 +120,65 @@ public class AudioDatabase : ScriptableObject
     public float glitchMinDistance;
     public float glitchMaxDistance;
     [Range(0, 1)] public float glitchPitchSwift;
-    [NonSerialized] public float glitchCurrentVolume;
+    [NonSerialized] public float glitchCurrentVolume; 
+    
+    [Space]
+
+    public AudioClip mirrorAC;
+    [Range(0, 1)] public float mirrorVolume;
+    public float mirrorMinDistance;
+    public float mirrorMaxDistance;
+    [Range(0, 1)] public float mirrorPitchSwift;
+    [NonSerialized] public float mirrorCurrentVolume;
+    
+    [Space]
+
+    public AudioClip bookshelfAC;
+    [Range(0, 1)] public float bookshelfVolume;
+    public float bookshelfMinDistance;
+    public float bookshelfMaxDistance;
+    [Range(0, 1)] public float bookshelfPitchSwift;
+    [NonSerialized] public float bookshelfCurrentVolume;
+
+
+    [Space]
+
+    public AudioClip fridgeLoopAC;
+    [Range(0, 1)] public float fridgeLoopVolume;
+    public float fridgeLoopMinDistance;
+    public float fridgeLoopMaxDistance;
+    [Range(0, 1)] public float fridgeLoopPitchSwift;
+    [NonSerialized] public float fridgeLoopCurrentVolume;
+
+
+    [Space]
+
+    public AudioClip heartBeatLoopAC;
+    [Range(0, 1)] public float heartBeatLoopVolume;
+    public float heartBeatLoopMinDistance;
+    public float heartBeatLoopMaxDistance;
+    [Range(0, 1)] public float heartBeatLoopPitchSwift;
+    [NonSerialized] public float heartBeatLoopCurrentVolume;
+    [Range(0, 1)] public float heartBeatMinPitch;
+    [Range(1, 10)] public float heartBeatMaxPitch;
+
+    [Space]
+
+    public AudioClip earRingAC;
+    [Range(0, 1)] public float earRingVolume;
+    public float earRingMinDistance;
+    public float earRingMaxDistance;
+    [Range(0, 1)] public float earRingPitchSwift;
+    [NonSerialized] public float earRingCurrentVolume;
+    [Range(0, 1f)] public float earRingMinVolume;
+    [Space]
+
+    public AudioClip stepAC;
+    [Range(0, 1)] public float stepVolume;
+    public float stepMinDistance;
+    public float stepMaxDistance;
+    [Range(0, 1)] public float stepPitchSwift;
+    [NonSerialized] public float stepCurrentVolume;
 
 
     [Header("Music")]

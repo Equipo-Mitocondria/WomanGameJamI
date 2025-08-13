@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4938385664308465211}
   - component: {fileID: 769096858658487580}
   - component: {fileID: 2585231841143233016}
+  - component: {fileID: 2251706323768120112}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5876340826785649804}
+  _computerGO: {fileID: 0}
   _movementForce: 10
   _maxVelocity: 2
   _workingPosition: {x: -2.76, y: 0.227, z: 10.532}
@@ -190,7 +192,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startingSanity: 50
   _maxSanity: 100
+  _sanityTweeningTime: 0
   _deathCountdownTime: 0
+  _resetCountdownTime: 0
+--- !u!81 &2251706323768120112
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5236993119448454411}
+  m_Enabled: 1
 --- !u!1 &8653361116191188437
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,6 +973,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c2ea1c81fb4cc5544b1489838f275d6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5876340826785649804}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c2ea1c81fb4cc5544b1489838f275d6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3175105253120188345}
     - targetCorrespondingSourceObject: {fileID: -8708396805832778714, guid: c2ea1c81fb4cc5544b1489838f275d6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5969237318362232212}
@@ -995,6 +1010,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3175105253120188345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2351235340862955798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c1dfedd5b013b4ea84f73d19123e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3118077514573332577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8708396805832778714, guid: c2ea1c81fb4cc5544b1489838f275d6b, type: 3}

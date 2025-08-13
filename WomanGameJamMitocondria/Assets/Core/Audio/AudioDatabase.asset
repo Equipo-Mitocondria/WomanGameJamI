@@ -13,70 +13,108 @@ MonoBehaviour:
   m_Name: AudioDatabase
   m_EditorClassIdentifier: 
   catAC: {fileID: 8300000, guid: bdbcbcc2635ac3145809ba284c94914c, type: 3}
-  catVolume: 1
+  catVolume: 0.5
   catMinDistance: 1
-  catMaxDistance: 50
+  catMaxDistance: 10
   catPitchSwift: 0
   plushieAC: {fileID: 8300000, guid: dd80e8708d2b21543b938d6ed3afe40a, type: 3}
-  plushieVolume: 1
+  plushieVolume: 0.05
   plushieMinDistance: 1
-  plushieMaxDistance: 3
+  plushieMaxDistance: 10
   plushiePitchSwift: 0
   workAC: {fileID: 8300000, guid: 1b5474616908f55439f9f96966065ca5, type: 3}
   workVolume: 0.05
   workMinDistance: 1
-  workMaxDistance: 3
+  workMaxDistance: 10
   workPitchSwift: 0
-  cupAC: {fileID: 8300000, guid: d7772169e48c99c499fc37a4435199ab, type: 3}
-  cupVolume: 1
+  cupAC: {fileID: 8300000, guid: 26274e60cde64764ab2e75f5f539ab8c, type: 3}
+  cupVolume: 0.25
   cupMinDistance: 1
-  cupMaxDistance: 3
+  cupMaxDistance: 50
   cupPitchSwift: 0
   phoneBuzzAC: {fileID: 8300000, guid: bced4da36cfa9d1478abe582c37e6f67, type: 3}
   phoneBuzzVolume: 1
   phoneBuzzMinDistance: 1
-  phoneBuzzMaxDistance: 3
+  phoneBuzzMaxDistance: 10
   phoneBuzzPitchSwift: 0
   notificationAC: {fileID: 8300000, guid: 53f66438b6e71444facb63ee4be2e46c, type: 3}
   notificationVolume: 0.2
   notificationMinDistance: 1
-  notificationMaxDistance: 1
+  notificationMaxDistance: 10
   notificationPitchSwift: 0
   waterBottleAC: {fileID: 8300000, guid: a37665d76594d4a439cf692515a428d8, type: 3}
-  waterBottleVolume: 1
+  waterBottleVolume: 0.1
   waterBottleMinDistance: 1
-  waterBottleMaxDistance: 3
+  waterBottleMaxDistance: 10
   waterBottlePitchSwift: 0
-  waterStreamAC: {fileID: 8300000, guid: 2d142da2e3fa79e4c9da8c8be471bfb9, type: 3}
-  waterStreamVolume: 1
-  waterStreamMinDistance: 1
-  waterStreamMaxDistance: 3
-  waterStreamPitchSwift: 0
-  tapAC: {fileID: 8300000, guid: 37529e0192502a54ebd300fa09159727, type: 3}
-  tapVolume: 1
+  showerAC: {fileID: 8300000, guid: 7c2d6e8fd4152ea46a76a9d217ddae55, type: 3}
+  showerVolume: 0.05
+  showerMinDistance: 1
+  showerMaxDistance: 10
+  showerPitchSwift: 0
+  showerLoopAC: {fileID: 8300000, guid: 962cbce8b0b58d24c9d0b319e24633c5, type: 3}
+  showerLoopVolume: 0.178
+  showerLoopMinDistance: 1
+  showerLoopMaxDistance: 6.5
+  showerLoopPitchSwift: 0
+  tapAC: {fileID: 8300000, guid: 2d142da2e3fa79e4c9da8c8be471bfb9, type: 3}
+  tapVolume: 0.05
   tapMinDistance: 1
-  tapMaxDistance: 3
+  tapMaxDistance: 10
   tapPitchSwift: 0
   plantAC: {fileID: 8300000, guid: ec05119223441c3478be4e373dfec942, type: 3}
-  plantVolume: 1
+  plantVolume: 0.6
   plantMinDistance: 1
-  plantMaxDistance: 3
+  plantMaxDistance: 10
   plantPitchSwift: 0.2
-  fridgeAC: {fileID: 8300000, guid: 8946531baf87c024ba66570f1f03e130, type: 3}
-  fridgeVolume: 1
+  fridgeAC: {fileID: 8300000, guid: 468698c842b4a7740a841bdb0f495809, type: 3}
+  fridgeVolume: 0.193
   fridgeMinDistance: 1
-  fridgeMaxDistance: 5
+  fridgeMaxDistance: 10
   fridgePitchSwift: 0
   glitchAC: {fileID: 8300000, guid: b09f9403dccfb8c458a5cf48bfd6b1e9, type: 3}
   glitchVolume: 1
   glitchMinDistance: 1
-  glitchMaxDistance: 5
+  glitchMaxDistance: 10
   glitchPitchSwift: 0.05
-  naturalMusicAC: {fileID: 0}
-  insane1MusicAC: {fileID: 0}
-  insane2MusicAC: {fileID: 0}
-  deathCountdownMusicAC: {fileID: 0}
-  definitiveDeathMusicAC: {fileID: 0}
-  musicVolume: 0
-  musicMinDistance: 0
-  musicMaxDistance: 0
+  mirrorAC: {fileID: 8300000, guid: 0aca0a75834da024c9a8912551d3caff, type: 3}
+  mirrorVolume: 0.01
+  mirrorMinDistance: 1
+  mirrorMaxDistance: 10
+  mirrorPitchSwift: 0
+  bookshelfAC: {fileID: 8300000, guid: 884bebcfeb3550946b83b1198560fdd9, type: 3}
+  bookshelfVolume: 0.05
+  bookshelfMinDistance: 1
+  bookshelfMaxDistance: 10
+  bookshelfPitchSwift: 0
+  fridgeLoopAC: {fileID: 8300000, guid: 8946531baf87c024ba66570f1f03e130, type: 3}
+  fridgeLoopVolume: 0.2
+  fridgeLoopMinDistance: 1
+  fridgeLoopMaxDistance: 10
+  fridgeLoopPitchSwift: 0
+  heartBeatLoopAC: {fileID: 8300000, guid: 9ab1499c59c646044999dfea40854406, type: 3}
+  heartBeatLoopVolume: 0.8
+  heartBeatLoopMinDistance: 1
+  heartBeatLoopMaxDistance: 1
+  heartBeatLoopPitchSwift: 0
+  heartBeatMinPitch: 1
+  heartBeatMaxPitch: 4
+  earRingAC: {fileID: 8300000, guid: b88bca48cd306024e8574078fc1fc2b7, type: 3}
+  earRingVolume: 0.5
+  earRingMinDistance: 1
+  earRingMaxDistance: 1
+  earRingPitchSwift: 0
+  earRingMinVolume: 0
+  stepAC: {fileID: 8300000, guid: 321e2741a56ece740b44e7f69a87abda, type: 3}
+  stepVolume: 0.05
+  stepMinDistance: 1
+  stepMaxDistance: 10
+  stepPitchSwift: 0.2
+  naturalMusicAC: {fileID: 8300000, guid: 52d584669544bc945b8fa748b6e82753, type: 3}
+  insane1MusicAC: {fileID: 8300000, guid: bade18c6dc5772248a832ee094f88e38, type: 3}
+  insane2MusicAC: {fileID: 8300000, guid: cc3701ceceb84314382b86f4cc971711, type: 3}
+  deathCountdownMusicAC: {fileID: 8300000, guid: cc3701ceceb84314382b86f4cc971711, type: 3}
+  definitiveDeathMusicAC: {fileID: 8300000, guid: 0137888e60d3a3a4ab23fedc4e24061d, type: 3}
+  musicVolume: 0.2
+  musicMinDistance: 1
+  musicMaxDistance: 20

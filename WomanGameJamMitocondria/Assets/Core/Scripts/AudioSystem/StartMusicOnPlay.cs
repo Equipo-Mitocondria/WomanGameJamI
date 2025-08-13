@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class StartMusicOnPlay : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        AudioManager.Instance.PlayMusic(MusicPiece.Natural, gameObject);
     }
 }
