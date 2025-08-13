@@ -10,6 +10,8 @@ public class NotificationsManager : MonoBehaviour
     public static NotificationsManager Instance;
     [SerializeField] float _notificationPeriod;
     [SerializeField] float _notificationChance;
+    [SerializeField] bool _spawnIntroductionNotification;
+    [SerializeField] bool _startNotificationRoutine;
 
     NotificationsBST notificationsBST;
 
@@ -31,19 +33,11 @@ public class NotificationsManager : MonoBehaviour
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
         notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, GameManager.Instance.CurrentPhase));
 
-        switch (GameManager.Instance.ConvertUnitySceneToSceneManagerScene(GameManager.Instance.CurrentPhase))
-        {
-            case SceneManager.Scenes.Phase1:
-            case SceneManager.Scenes.Phase2:
-                NotificationSpawnWithID(0);
-                _notificationCoroutine = StartCoroutine(NotificationPeriod());
-                break;
-            case SceneManager.Scenes.Phase3:
-                _notificationCoroutine = StartCoroutine(NotificationPeriod());
-                break;
-            case SceneManager.Scenes.Tutorial:
-                break;
-        }
+        if(_spawnIntroductionNotification)
+            NotificationSpawnWithID(0);
+
+        if (_startNotificationRoutine)
+            StartCoroutine(NotificationPeriod());
     }
 
     public void TutorialNotificationSpawn()
