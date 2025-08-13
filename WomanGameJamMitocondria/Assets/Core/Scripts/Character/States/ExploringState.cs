@@ -35,7 +35,18 @@ public class ExploringState : FSMTemplateState
         }
 
         if (((Character)_fsm).IsWorking)
-            ((Character)_fsm).ChangeState(((Character)_fsm).workingState);
+        {
+            if(((Character)_fsm).Sanity != null)
+            {
+                if(((Character)_fsm).Sanity.SanityPercentage == 1)
+                {
+                    ((Character)_fsm).IsWorking = false;
+                }
+                else
+                    ((Character)_fsm).ChangeState(((Character)_fsm).workingState);
+            }
+        }
+            
     }
 
     public override void UpdatePhysics() 

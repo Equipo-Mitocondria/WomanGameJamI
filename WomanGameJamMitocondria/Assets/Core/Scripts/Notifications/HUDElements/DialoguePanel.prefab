@@ -112,8 +112,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "No vales para nada \xF9w\xFA"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8ad31012debb5f04d864ebdf5799bf2c, type: 2}
+  m_sharedMaterial: {fileID: -5593323913977205582, guid: 8ad31012debb5f04d864ebdf5799bf2c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
