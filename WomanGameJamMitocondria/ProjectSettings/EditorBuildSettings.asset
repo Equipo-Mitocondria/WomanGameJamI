@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Core/Scenes/TitleScreenBad.unity
     guid: c9dfc92ba40afb5448ec955fa81f1565
+  - enabled: 1
+    path: Assets/Core/Scenes/ThanksForPlayingScene.unity
+    guid: 90fc6e4a8114a86418e00d0929360833
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
