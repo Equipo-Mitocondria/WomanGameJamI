@@ -7,6 +7,4 @@ public class CreditsScreen : MonoBehaviour
     {
         StartCoroutine(GameManager.Instance.FinishCredits());
     }
-
-    
 }

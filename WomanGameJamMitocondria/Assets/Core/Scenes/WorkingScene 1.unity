@@ -2123,8 +2123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeWaitForEndPlay: 2
-  _canvas: {fileID: 2007451403}
+  _mainCanvas: {fileID: 2007451403}
+  _player: {fileID: 114547320}
   _deathScreenPrefab: {fileID: 7277463168935269178, guid: 199c454583394da479a785582c45e473, type: 3}
+  _victoryScreenPrefab: {fileID: 7277463168935269178, guid: 353a30ea5f3e23440bbaca712067927a, type: 3}
 --- !u!4 &285226309
 Transform:
   m_ObjectHideFlags: 0

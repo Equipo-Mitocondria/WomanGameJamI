@@ -38,7 +38,7 @@ public class TutorialDialogueManager : DialogueManager
         } else if (_doEndTutorial)
         {
             _doEndTutorial = false;
-            GameManager.Instance.EndTask();
+            GameManager.Instance.NextPhase();
         }
     }
 

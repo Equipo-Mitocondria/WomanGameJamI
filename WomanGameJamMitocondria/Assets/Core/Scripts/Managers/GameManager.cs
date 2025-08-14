@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum Scenes { TitleScreen = 0, Phase1 = 1, Phase2 = 2, Phase3 = 3, Credits = 4, Tutorial = 5, TitleScreenBad = 6 }
+    public enum Scenes { TitleScreen = 0, Phase1 = 1, Phase2 = 2, Phase3 = 3, Credits = 4, Tutorial = 5, TitleScreenBad = 6, ThanksForPlaying = 7 }
 
     public static GameManager Instance;
     
     [SerializeField] private float _timeWaitForEndPlay;
     [Space]
     [SerializeField] private GameObject _mainCanvas;
+    [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _deathScreenPrefab;
+    [SerializeField] private GameObject _victoryScreenPrefab;
 
     private Scenes _currentPhase;
     private float _time;
@@ -38,6 +40,14 @@ public class GameManager : MonoBehaviour
 
     public void EndTask()
     {
+        if (_currentPhase == Scenes.Phase3)
+            Win();
+        else
+            Instantiate(_victoryScreenPrefab);
+    }
+
+    public void NextPhase()
+    {
         switch (_currentPhase)
         {
             case Scenes.Tutorial:
@@ -50,7 +60,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Phase3));
                 break;
             case Scenes.Phase3:
-                Win();
+                SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.ThanksForPlaying));
                 break;
         }
     }
@@ -89,13 +99,17 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeWaitForEndPlay);
 
-        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Credits));
+        _mainCanvas.gameObject.SetActive(false);
+        NotificationsManager.Instance.gameObject.SetActive(false);
+        _player.transform.position = new Vector3(1000f, 1000f, 1000f);
+        Instantiate(_victoryScreenPrefab);
     }
 
     public void DeathScreen()
     {
         _mainCanvas.gameObject.SetActive(false);
         NotificationsManager.Instance.gameObject.SetActive(false);
+        _player.transform.position = new Vector3(1000f, 1000f, 1000f);
         Instantiate(_deathScreenPrefab);
     }
 
@@ -109,6 +123,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(14f);
 
         SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.TitleScreenBad));
+    }
+
+    public IEnumerator FinishThanksForPlaying()
+    {
+        yield return new WaitForSeconds(6f);
+
+        SceneManager.Instance.LoadScene(ConvertSceneManagerSceneToUnityBuildIndex(Scenes.Credits));
     }
 
     public Scenes ConvertUnitySceneToSceneManagerScene(int value)
@@ -129,6 +150,8 @@ public class GameManager : MonoBehaviour
                 return Scenes.Tutorial;
             case (6):
                 return Scenes.TitleScreenBad;
+            case (7):
+                return Scenes.ThanksForPlaying;
             default:
                 throw new Exception($"Unable to load scene with build index {value}.");
         }
@@ -152,6 +175,8 @@ public class GameManager : MonoBehaviour
                 return 5;
             case Scenes.TitleScreenBad:
                 return 6;
+            case Scenes.ThanksForPlaying:
+                return 7;
             default:
                 throw new Exception($"Unable to find build index for scene {value}.");
         }

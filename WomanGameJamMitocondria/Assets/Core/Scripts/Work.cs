@@ -8,6 +8,7 @@ public class Work : MonoBehaviour
     [SerializeField] private float _maxWork;
     private float _currentWork;
     private bool _isWorking;
+    private bool _hasCompleted = false;
 
     public float CurrentWorkAmount { get { return _currentWork; } }
     public bool IsWorking { get { return _isWorking; } set { _isWorking = value; } }
@@ -28,7 +29,13 @@ public class Work : MonoBehaviour
             //UIManager.Instance.UpdateWorkProgress(_currentWork.ToString("0.00"));
 
             if (_currentWork >= _maxWork)
-                GameManager.Instance.EndTask();
+            {
+                if (!_hasCompleted)
+                {
+                    _hasCompleted = true;
+                    GameManager.Instance.EndTask();
+                }
+            }
         }
     }
 
