@@ -181,7 +181,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeWaitForEndPlay: 0
   _mainCanvas: {fileID: 0}
+  _player: {fileID: 0}
   _deathScreenPrefab: {fileID: 0}
+  _victoryScreenPrefab: {fileID: 0}
 --- !u!4 &266722455
 Transform:
   m_ObjectHideFlags: 0
@@ -1285,6 +1287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 943655838}
   - component: {fileID: 943655837}
+  - component: {fileID: 943655839}
   m_Layer: 0
   m_Name: VideoPlayer
   m_TagString: Untagged
@@ -1300,7 +1303,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943655836}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: cf0121fc516156e42a6a4fa7defe906e, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -1343,6 +1346,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &943655839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943655836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15cdf5e2e7ff889469fce6656807b3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &973807540
 GameObject:
   m_ObjectHideFlags: 0
