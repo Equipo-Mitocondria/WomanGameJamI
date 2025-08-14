@@ -661,7 +661,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 769096858658487580, guid: 2ccb8932c7ed47b46bac5533f756ca6c, type: 3}
       propertyPath: _maxWork
+<<<<<<< HEAD
+      value: 220
+=======
       value: 50
+>>>>>>> 31094661292632593d337da81bce9471aca73f74
       objectReference: {fileID: 0}
     - target: {fileID: 769096858658487580, guid: 2ccb8932c7ed47b46bac5533f756ca6c, type: 3}
       propertyPath: _progressBar
