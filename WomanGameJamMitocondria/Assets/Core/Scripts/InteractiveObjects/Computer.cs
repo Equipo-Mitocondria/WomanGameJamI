@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Computer : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Work _work;
+    [SerializeField] protected Work _work;
     [SerializeField] private GameObject _interactionPrompt;
 
     private void Start()

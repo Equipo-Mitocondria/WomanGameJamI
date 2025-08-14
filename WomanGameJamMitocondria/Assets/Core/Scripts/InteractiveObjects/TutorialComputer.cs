@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TutorialComputer : Computer
@@ -14,23 +16,26 @@ public class TutorialComputer : Computer
     {
         base.Interact();
 
-        if (_isFirstTimeInteract)
-        {
-            _isFirstTimeInteract = false;
-            RemoveGlowingMaterial();
-            NotificationsManager.Instance.TutorialNotificationSpawn();
-            _tutorialDialogueManager.PrepareToShowTutorialInteractionPrompt();
-            _tutorialCat.SetActive(true);
-        }
-        else
-        {
-            HideTutorialInteractionPrompt();
-        }
+        if (!_isFirstTimeInteract)
+            return;
+        
+        _isFirstTimeInteract = false;
+        RemoveGlowingMaterial();
+        NotificationsManager.Instance.TutorialNotificationSpawn();
+        _tutorialDialogueManager.PrepareToShowTutorialInteractionPrompt();
+        _tutorialCat.SetActive(true);
+        StartCoroutine(HideTutorialInteractionPromptOnStopWorking());
     }
 
     public void ShowTutorialInteractionPrompt()
     {
         _tutorialInteractionPrompt.SetActive(true);
+    }
+
+    IEnumerator HideTutorialInteractionPromptOnStopWorking()
+    {
+        yield return new WaitUntil(() => !_work.IsWorking);
+        HideTutorialInteractionPrompt();
     }
 
     public void HideTutorialInteractionPrompt()
