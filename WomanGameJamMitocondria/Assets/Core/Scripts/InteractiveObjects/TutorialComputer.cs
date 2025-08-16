@@ -21,15 +21,19 @@ public class TutorialComputer : Computer
         
         _isFirstTimeInteract = false;
         RemoveGlowingMaterial();
-        NotificationsManager.Instance.TutorialNotificationSpawn();
-        _tutorialDialogueManager.PrepareToShowTutorialInteractionPrompt();
-        _tutorialCat.SetActive(true);
         StartCoroutine(HideTutorialInteractionPromptOnStopWorking());
+
+        _work.CanGetUp = false;
+
+        _tutorialCat.SetActive(true);
+        _tutorialDialogueManager.PrepareToShowTutorialInteractionPrompt();
+        NotificationsManager.Instance.TutorialNotificationSpawn();
     }
 
     public void ShowTutorialInteractionPrompt()
     {
         _tutorialInteractionPrompt.SetActive(true);
+        _work.CanGetUp = true;
     }
 
     IEnumerator HideTutorialInteractionPromptOnStopWorking()

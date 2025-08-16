@@ -209,7 +209,7 @@ public class Sanity : MonoBehaviour
     private IEnumerator ResetCountdown()
     {
         yield return new WaitForSeconds(_resetCountdownTime);
-        GameManager.Instance.DeathScreen();
+        GameManager.Instance.ShowDeathScreen();
     }
 
     public void StopDeathCoroutine()
