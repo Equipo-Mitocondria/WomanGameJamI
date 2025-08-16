@@ -28,6 +28,7 @@ public class Character : FSMTemplateMachine
 
     public bool IsWorking { get { return _work.IsWorking; } set { _work.IsWorking = value; } }
     public bool IsDying { get { return _sanity.IsDying; } set { _sanity.IsDying = value; } }
+    public bool CanGetUp { get { return _work.CanGetUp; } set { _work.CanGetUp = value; } }
 
     public GameObject ComputerGO {  get { return _computerGO; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }

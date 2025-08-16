@@ -8,10 +8,12 @@ public class Work : MonoBehaviour
     [SerializeField] private float _maxWork;
     private float _currentWork;
     private bool _isWorking;
+    private bool _canGetUp = true;
     private bool _hasCompleted = false;
 
     public float CurrentWorkAmount { get { return _currentWork; } }
     public bool IsWorking { get { return _isWorking; } set { _isWorking = value; } }
+    public bool CanGetUp { get { return _canGetUp; } set { _canGetUp = value; } }
 
     private void Start()
     {

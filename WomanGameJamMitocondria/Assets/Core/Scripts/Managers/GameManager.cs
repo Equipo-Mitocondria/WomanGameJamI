@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         if (_currentPhase == Scenes.Phase3)
             Win();
         else
-            Instantiate(_victoryScreenPrefab);
+            ShowVictoryScreen();
     }
 
     public void NextPhase()
@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
             NotificationsManager.Instance.NotificationSpawnWithID(0);
             NotificationsManager.Instance.StopNotificationCoroutines();
 
+            _player.GetComponent<Character>().IsWorking = false;
             Sanity.Instance.StopDeathCoroutine();
 
             StartCoroutine(WaitForEndPlay());
@@ -99,17 +100,24 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeWaitForEndPlay);
 
-        _mainCanvas.gameObject.SetActive(false);
-        NotificationsManager.Instance.gameObject.SetActive(false);
-        _player.transform.position = new Vector3(1000f, 1000f, 1000f);
-        Instantiate(_victoryScreenPrefab);
+        ShowVictoryScreen();
     }
 
-    public void DeathScreen()
+    private void ShowVictoryScreen()
     {
         _mainCanvas.gameObject.SetActive(false);
         NotificationsManager.Instance.gameObject.SetActive(false);
         _player.transform.position = new Vector3(1000f, 1000f, 1000f);
+        _player.GetComponent<Character>().IsWorking = false;
+        Instantiate(_victoryScreenPrefab);
+    }
+
+    public void ShowDeathScreen()
+    {
+        _mainCanvas.gameObject.SetActive(false);
+        NotificationsManager.Instance.gameObject.SetActive(false);
+        _player.transform.position = new Vector3(1000f, 1000f, 1000f);
+        _player.GetComponent<Character>().IsWorking = false;
         Instantiate(_deathScreenPrefab);
     }
 

@@ -61,7 +61,9 @@ public class WorkingState : FSMTemplateState
 
     private void Leave(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        ((Character)_fsm).IsWorking = false;
-        ((Character)_fsm).MoveToPreWorkingPosition();
+        if (((Character)_fsm).CanGetUp){
+            ((Character)_fsm).IsWorking = false;
+            ((Character)_fsm).MoveToPreWorkingPosition();
+        }
     }
 }
