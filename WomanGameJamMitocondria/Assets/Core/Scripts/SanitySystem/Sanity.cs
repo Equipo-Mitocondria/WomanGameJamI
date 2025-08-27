@@ -12,19 +12,21 @@ public class Sanity : MonoBehaviour
     [SerializeField] private float _deathCountdownTime;
     [SerializeField] private float _resetCountdownTime;
 
-    private bool _isDying;
-    public bool IsDying{ get { return _isDying; } set { _isDying = value; } }
+    private bool _updateMusicFlag = true;
+    public bool UpdateMusicFlag { get { return _updateMusicFlag; } set { _updateMusicFlag = value; } }
+
+    private bool _isDeathCountdown = false;
+    public bool IsDeathCountdown { get { return _isDeathCountdown; } set { _isDeathCountdown = value; } }
+
+    private float _deathCountdownRemainingTime;
+    public float DeathCountdownRemainingTime { get { return _deathCountdownRemainingTime; } set { _deathCountdownRemainingTime = value; } }
+
+    private float _deathCountdownRemainingTimeForMuttingMusic;
+    public float DeathCountdownRemainingTimeForMuttingMusic { get { return _deathCountdownRemainingTimeForMuttingMusic; } set { _deathCountdownRemainingTimeForMuttingMusic = value; } }
 
     private float _sanity;
     float _sanityPercentage;
     float _lastSanityPercentage = -1; // Used only to avoid applying changes if there's no change
-    private Coroutine _deathCountdownCoroutine;
-    private bool _isDeathCountdown = false;
-    private bool _continueDeathCountdownCoroutineFlag = false;
-    private bool _updateMusic = true;
-
-    private float _deathCountdownRemainingTime;
-    private float _deathCountdownRemainingTimeForMuttingMusic;
 
     public float CurrentSanityAmount { get { return _sanity; } }
     public float SanityPercentage { get { return _sanityPercentage; } }
@@ -38,11 +40,6 @@ public class Sanity : MonoBehaviour
         }
         else
             Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        _deathCountdownCoroutine = null;
     }
 
     private void Update()
@@ -60,7 +57,7 @@ public class Sanity : MonoBehaviour
         switch (sanityEffect.Effect)
         {
             case (SanityChange.Add):
-                if(overTime)
+                if (overTime)
                     _sanity += sanityEffect.Amount * Time.deltaTime;
                 else
                     Tween.Instance.TweenSanity(_sanity, CapSanityValue(_sanity + sanityEffect.Amount), _sanityTweeningTime, value => _sanity = value);
@@ -78,9 +75,9 @@ public class Sanity : MonoBehaviour
                 throw new System.Exception("Unable to get SanityChange value.");
         }
 
-        if(_sanity < 0)
+        if (_sanity < 0)
             _sanity = 0;
-        
+
         if (_sanity >= _maxSanity)
             _sanity = _maxSanity;
     }
@@ -109,32 +106,6 @@ public class Sanity : MonoBehaviour
         //if (_sanityPercentage == 0f)
         //    return;
 
-        if (_sanityPercentage >= 1f)
-        {
-            if (!_isDeathCountdown)
-            {
-                _isDeathCountdown = true;
-                AudioManager.Instance.PlaySoundEffect(SoundEffect.Heartbeat);
-                AudioManager.Instance.PlaySoundEffect(SoundEffect.EarRing);
-                _deathCountdownRemainingTime = _deathCountdownTime;
-                _deathCountdownRemainingTimeForMuttingMusic = _deathCountdownTime * .75f;
-                _deathCountdownCoroutine = StartCoroutine(DeathCountdown());
-            }
-        }
-        else
-        {
-            if (_deathCountdownCoroutine != null )
-            {
-                _isDeathCountdown = false;
-                AudioManager.Instance.StopHeartBeat();
-                AudioManager.Instance.StopEarRing();
-                _continueDeathCountdownCoroutineFlag = false;
-                StopCoroutine(_deathCountdownCoroutine);
-                _deathCountdownCoroutine = null;
-            }
-
-        }
-        
         UpdateMusic();
     }
 
@@ -156,25 +127,25 @@ public class Sanity : MonoBehaviour
     //    else
     //        AudioManager.Instance.OnMusicLoopPointReached.AddListener(() => AudioManager.Instance.ChangeMusic(MusicPiece.DeathCountdown));
     //}
-    
+
     // Direct volume change method
 
     private void UpdateMusic()
     {
-        if (!_isDeathCountdown && _updateMusic)
+        if (!_isDeathCountdown && _updateMusicFlag)
         {
             if (_sanityPercentage <= 0.33f)
                 AudioManager.Instance.ChangeMusic(MusicPiece.Natural);
-            else if(_sanityPercentage > 0.33f && _sanityPercentage <= 0.66f)
+            else if (_sanityPercentage > 0.33f && _sanityPercentage <= 0.66f)
                 AudioManager.Instance.ChangeMusic(MusicPiece.Insane1);
-            else if(_sanityPercentage > 0.66f)
+            else if (_sanityPercentage > 0.66f)
                 AudioManager.Instance.ChangeMusic(MusicPiece.Insane2);
         }
     }
 
     private void UpdateDeathCountdownSFX()
     {
-        if (_isDeathCountdown) 
+        if (_isDeathCountdown)
         {
             _deathCountdownRemainingTime -= Time.deltaTime;
             _deathCountdownRemainingTimeForMuttingMusic -= Time.deltaTime;
@@ -188,36 +159,8 @@ public class Sanity : MonoBehaviour
                 AudioManager.Instance.UpdateEarRingVolume(1);
                 AudioManager.Instance.UpdateMusicVolumesBasedOnDeathCountdownPercentage(0);
 
-                _continueDeathCountdownCoroutineFlag = true;
+                GameManager.Instance.ContinueDeathCountdownCoroutineFlag = true;
             }
-        }
-    }
-
-    private IEnumerator DeathCountdown()
-    {
-        yield return new WaitUntil(() => _continueDeathCountdownCoroutineFlag);
-
-        _isDying = true;
-        _updateMusic = false;
-        AudioManager.Instance.StopHeartBeat();
-        AudioManager.Instance.StopEarRing();
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().Die();
-        //AudioManager.Instance.ChangeMusic(MusicPiece.DefinitiveDeath);
-        StartCoroutine(ResetCountdown());
-    }
-
-    private IEnumerator ResetCountdown()
-    {
-        yield return new WaitForSeconds(_resetCountdownTime);
-        GameManager.Instance.ShowDeathScreen();
-    }
-
-    public void StopDeathCoroutine()
-    {
-        if (_deathCountdownCoroutine != null)
-        {
-            StopCoroutine(_deathCountdownCoroutine);
-            _deathCountdownCoroutine = null;
         }
     }
 }

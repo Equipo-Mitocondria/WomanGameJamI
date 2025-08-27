@@ -1,19 +1,17 @@
 using System.Collections;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class ExploringState : FSMTemplateState
+public class StressingState : FSMTemplateState
 {
+    public StressingState(FSMTemplateMachine fsm) : base(fsm) { }
+
     private InputActions _inputActions;
     private InputAction _movement;
 
     private Rigidbody _rb;
 
     private Vector2 _movementV2;
-
-    public ExploringState(FSMTemplateMachine fsm) : base(fsm) { }
 
     public override void Enter()
     {
@@ -24,25 +22,42 @@ public class ExploringState : FSMTemplateState
         _inputActions.Exploring.Interact.performed += Interact;
 
         _inputActions.Exploring.Enable();
+
+        AudioManager.Instance.PlaySoundEffect(SoundEffect.Heartbeat);
+        AudioManager.Instance.PlaySoundEffect(SoundEffect.EarRing);
+
+        if (((Character)_fsm).Sanity != null)
+        {
+            ((Character)_fsm).Sanity.IsDeathCountdown = true;
+            ((Character)_fsm).Sanity.DeathCountdownRemainingTime = GameManager.Instance.DeathCountdownTime;
+            ((Character)_fsm).Sanity.DeathCountdownRemainingTimeForMuttingMusic = GameManager.Instance.DeathCountdownTime * .75f;
+        }
+
+        GameManager.Instance.StartDeath();
     }
 
-    public override void UpdateLogic() 
+    public override void UpdateLogic()
     {
         if (((Character)_fsm).Sanity != null)
         {
-            if (((Character)_fsm).Sanity.SanityPercentage == 1)
+            if (((Character)_fsm).Sanity.SanityPercentage < 1f)
             {
-                ((Character)_fsm).ChangeState(((Character)_fsm).stressingState);
+                ((Character)_fsm).ChangeState(((Character)_fsm).exploringState);
+                return;
             }
         }
 
-        if (((Character)_fsm).IsWorking)
+        if (((Character)_fsm).IsDead)
         {
-            ((Character)_fsm).ChangeState(((Character)_fsm).workingState);
-        }            
+            ((Character)_fsm).ChangeState(((Character)_fsm).dyingState);
+            return;
+        }
+
+        if (((Character)_fsm).IsWorking)
+            ((Character)_fsm).IsWorking = false;
     }
 
-    public override void UpdatePhysics() 
+    public override void UpdatePhysics()
     {
         Move();
     }
@@ -55,6 +70,16 @@ public class ExploringState : FSMTemplateState
         _movement = null;
 
         _inputActions = null;
+
+        if (((Character)_fsm).Sanity != null)
+        {
+            ((Character)_fsm).Sanity.IsDeathCountdown = false;
+        }
+
+        AudioManager.Instance.StopHeartBeat();
+        AudioManager.Instance.StopEarRing();
+        GameManager.Instance.ContinueDeathCountdownCoroutineFlag = false;
+        GameManager.Instance.StopDeath();
     }
 
     private void Interact(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -81,7 +106,7 @@ public class ExploringState : FSMTemplateState
     {
         if (rb.linearVelocity.magnitude > ((Character)_fsm).MaxVelocity)
             rb.linearVelocity = ((Character)_fsm).MaxVelocity * rb.linearVelocity.normalized;
-        else if(rb.linearVelocity.magnitude < Mathf.Epsilon)
+        else if (rb.linearVelocity.magnitude < Mathf.Epsilon)
             rb.linearVelocity = Vector3.zero;
     }
 
@@ -109,25 +134,25 @@ public class ExploringState : FSMTemplateState
             else if (horizontalInput > 0f)
                 _fsm.transform.rotation = Quaternion.LookRotation(right);
         }
-        else if(Mathf.Abs(horizontalInput) < Mathf.Abs(verticalInput))
+        else if (Mathf.Abs(horizontalInput) < Mathf.Abs(verticalInput))
         {
             if (verticalInput < 0f)
                 _fsm.transform.rotation = Quaternion.LookRotation(-forward);
             else if (verticalInput > 0f)
                 _fsm.transform.rotation = Quaternion.LookRotation(forward);
         }
-        else if(Mathf.Abs(horizontalInput) == Mathf.Abs(verticalInput))
+        else if (Mathf.Abs(horizontalInput) == Mathf.Abs(verticalInput))
         {
             //S
             if (verticalInput < 0f)
             {
                 //SW
-                if(horizontalInput < 0f)
+                if (horizontalInput < 0f)
                     _fsm.transform.rotation = Quaternion.LookRotation((-right - forward).normalized);
                 else if (horizontalInput > 0f) //SE
                     _fsm.transform.rotation = Quaternion.LookRotation((right - forward).normalized);
             }
-            else if(verticalInput > 0f)
+            else if (verticalInput > 0f)
             {
                 //NW
                 if (horizontalInput < 0f)

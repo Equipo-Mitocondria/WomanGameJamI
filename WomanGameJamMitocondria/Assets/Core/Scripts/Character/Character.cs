@@ -5,6 +5,7 @@ public class Character : FSMTemplateMachine
     //States
     public WorkingState workingState;
     public ExploringState exploringState;
+    public StressingState stressingState;
     public DyingState dyingState;
 
     [Header("References")]
@@ -26,8 +27,10 @@ public class Character : FSMTemplateMachine
     private Vector3 _lastPositionBeforeWork;
     private Quaternion _lastRotationBeforeWork;
 
+    private bool _isDead = false;
+    public bool IsDead { get { return _isDead; } set { _isDead = value; } }
+
     public bool IsWorking { get { return _work.IsWorking; } set { _work.IsWorking = value; } }
-    public bool IsDying { get { return _sanity.IsDying; } set { _sanity.IsDying = value; } }
     public bool CanGetUp { get { return _work.CanGetUp; } set { _work.CanGetUp = value; } }
 
     public GameObject ComputerGO {  get { return _computerGO; } }
@@ -49,6 +52,7 @@ public class Character : FSMTemplateMachine
         //Initialize states (this must be done before initializing the FSM)
         workingState = new WorkingState(this);
         exploringState = new ExploringState(this);
+        stressingState = new StressingState(this);
         dyingState = new DyingState(this);
 
         // We must call base.Start() to initalize the FSM

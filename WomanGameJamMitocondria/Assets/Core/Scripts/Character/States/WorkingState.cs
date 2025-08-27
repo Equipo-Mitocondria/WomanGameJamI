@@ -30,7 +30,7 @@ public class WorkingState : FSMTemplateState
         {
             if(((Character)_fsm).Sanity.SanityPercentage == 1)
             {
-                ((Character)_fsm).ChangeState(((Character)_fsm).exploringState);
+                ((Character)_fsm).ChangeState(((Character)_fsm).stressingState);
                 ((Character)_fsm).IsWorking = false;
                 ((Character)_fsm).MoveToPreWorkingPosition();
                 return;

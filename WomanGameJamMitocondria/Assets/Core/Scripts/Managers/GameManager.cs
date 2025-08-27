@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public enum Scenes { TitleScreen = 0, Phase1 = 1, Phase2 = 2, Phase3 = 3, Credits = 4, Tutorial = 5, TitleScreenBad = 6, ThanksForPlaying = 7 }
 
     public static GameManager Instance;
+    public float Time {  get { return _time; } }
+    public int CurrentPhase { get { return ConvertSceneManagerSceneToUnityBuildIndex(_currentPhase); } set { _currentPhase = ConvertUnitySceneToSceneManagerScene(value); } }
     
     [SerializeField] private float _timeWaitForEndPlay;
     [Space]
@@ -19,8 +21,15 @@ public class GameManager : MonoBehaviour
     private float _time;
     private bool _hasWin = false;
 
-    public float Time {  get { return _time; } }
-    public int CurrentPhase { get { return ConvertSceneManagerSceneToUnityBuildIndex(_currentPhase); } set { _currentPhase = ConvertUnitySceneToSceneManagerScene(value); } }
+    private Coroutine _deathCountdownCoroutine;
+    private bool _continueDeathCountdownCoroutineFlag = false;
+    public bool ContinueDeathCountdownCoroutineFlag { get { return _continueDeathCountdownCoroutineFlag; } set { _continueDeathCountdownCoroutineFlag = value; } }
+
+    [SerializeField] private float _deathCountdownTime = 10f;
+    public float DeathCountdownTime { get { return _deathCountdownTime; } }
+
+    [SerializeField] private float _resetCountdownTime = 2f;
+    public float ResetCountdownTime { get { return _resetCountdownTime; } }
 
     private void Awake()
     {
@@ -90,7 +99,7 @@ public class GameManager : MonoBehaviour
             NotificationsManager.Instance.StopNotificationCoroutines();
 
             _player.GetComponent<Character>().IsWorking = false;
-            Sanity.Instance.StopDeathCoroutine();
+            StopDeath();
 
             StartCoroutine(WaitForEndPlay());
         }
@@ -189,4 +198,36 @@ public class GameManager : MonoBehaviour
                 throw new Exception($"Unable to find build index for scene {value}.");
         }
     }
+
+    public void StartDeath()
+    {
+        StartCoroutine(DeathCountdown());
+    }
+
+    private IEnumerator DeathCountdown()
+    {
+        yield return new WaitUntil(() => _continueDeathCountdownCoroutineFlag);
+
+        _player.GetComponent<Character>().IsDead = true;
+    }
+
+    public void StartReset()
+    {
+        StartCoroutine(ResetCountdown());
+    }
+    public void StopDeath()
+    {
+        if (_deathCountdownCoroutine != null)
+        {
+            StopCoroutine(_deathCountdownCoroutine);
+            _deathCountdownCoroutine = null;
+        }
+    }
+
+    private IEnumerator ResetCountdown()
+    {
+        yield return new WaitForSeconds(_resetCountdownTime);
+        GameManager.Instance.ShowDeathScreen();
+    }
+
 }
