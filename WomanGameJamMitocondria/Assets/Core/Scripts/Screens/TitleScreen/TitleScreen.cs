@@ -13,13 +13,13 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private GameObject _howToPlayBoxA;
     [SerializeField] private GameObject _howToPlayBoxB;
 
-    private Color _color;
+    private Color _originalTextColor;
 
     private InputActions _inputActions;
 
     private void Start()
     {
-        _color = _startButton.GetComponentInChildren<TMP_Text>().color;
+        _originalTextColor = _startButton.GetComponentInChildren<TMP_Text>().color;
         _inputActions = new InputActions();
 
         _howToPlayBoxA.SetActive(false);
@@ -29,7 +29,7 @@ public class TitleScreen : MonoBehaviour
     public void PlayStartButton()
     {
         AudioManager.Instance.PlayUIClick();
-        GameManager.Instance.BeginPlay();
+        GameManager.Instance.BeginTutorial();
     }
     
     public void PlayVolumeButton()
@@ -93,22 +93,22 @@ public class TitleScreen : MonoBehaviour
 
     public void StopHoverPlayButton()
     {
-        _startButton.GetComponentInChildren<TMP_Text>().color = _color;
+        _startButton.GetComponentInChildren<TMP_Text>().color = _originalTextColor;
     }
 
     public void StopHoverVolumeButton()
     {
-        _volumeButton.GetComponentInChildren<TMP_Text>().color = _color;
+        _volumeButton.GetComponentInChildren<TMP_Text>().color = _originalTextColor;
     }
 
     public void StopHoverHowToPlayButton()
     {
-        _howToPlayButton.GetComponentInChildren<TMP_Text>().color = _color;
+        _howToPlayButton.GetComponentInChildren<TMP_Text>().color = _originalTextColor;
     }
 
     public void StopHoverExitButton()
     {
-        _exitButton.GetComponentInChildren<TMP_Text>().color = _color;
+        _exitButton.GetComponentInChildren<TMP_Text>().color = _originalTextColor;
     }
 
     private void OnDisable()
