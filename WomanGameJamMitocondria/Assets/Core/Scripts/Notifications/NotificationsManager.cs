@@ -31,7 +31,7 @@ public class NotificationsManager : MonoBehaviour
 
         string csv = CSVImporter.ImportCSV(path);
         List<string[]> parsedCSV = CSVParser.ParseCSV(csv);
-        notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, GameManager.Instance.CurrentPhase));
+        notificationsBST = new NotificationsBST(NotificationsBuilder.BuildNotificationListsList(parsedCSV, GameManager.Instance.GetCurrentSceneInt()));
 
         if(_spawnIntroductionNotification)
             NotificationSpawnWithID(0);
